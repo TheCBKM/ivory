@@ -1,0 +1,74 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css"
+        href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <style>
+        a {
+            text-decoration: none;
+            text-decoration-color: none
+        }
+
+        .product {
+            background-color: rgb(156, 220, 236);
+            border: 3px red dotted
+        }
+
+        .subcategory {
+            background-color: rgb(97, 187, 179);
+            border: 3px rgb(5, 1, 1) dotted
+        }
+        .view{
+            width:50%;
+            margin-left:20%;
+            margin-top:5%;
+            font-size:calc(5px + 1vw)
+        }
+        .category{
+            background-color: grey;
+            border: pink dotted
+
+
+        }
+    </style>
+</head>
+
+<body>
+    <div class="view">
+        <ul class="category">
+            <%categories.map(c=>{%>
+            <li> <%=c.name%> <a href="/category/update/<%=c._id%>"><i class="fa fa-edit"></i></a></li>
+            <ul class="subcategory">
+                <%subCategories.map(sc=>{%>
+                <%if(sc.category.toString()==c._id.toString()){%>
+                <li><%=sc.name%> <a href="/product/addhere/<%=sc._id%>/<%=sc.name%>/product"><i class="fa fa-plus"
+                            aria-hidden="true"></i></a> <a href="/subcategory/update/<%=sc._id%>"><i
+                            class="fa fa-edit"></i></a></li>
+                <ul class="product">
+                    <%products.map(p=>{%>
+                    <%if(p.subcategory.toString()==sc._id.toString()){%>
+                    <li><%=p.name%> <a href="/product/update/<%=p._id%>"><i class="fa fa-edit"></i></a></li>
+                    <% }})%>
+                </ul>
+                <% }})%>
+                <li> <a href="/product/addhere/<%=c._id%>/<%=c.name%>/subcategory"><i class="fa fa-plus"
+                            aria-hidden="true"></i></a></li>
+            </ul>
+            <% })%>
+            <li> <a href="/category/add"><i class="fa fa-plus" aria-hidden="true"></i></a></li>
+        </ul>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

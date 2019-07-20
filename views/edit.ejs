@@ -1,0 +1,48 @@
+<html>
+
+<head>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <style>
+    .edit{
+        width:50%;
+        margin-left:20%
+    }
+    </style>
+</head>
+
+<body>
+        <div class="edit">
+    <%if(edit==="category"){%>
+    <h4>Edit Category</h4>
+    <form class="form-group" action="/category/update" method="POST">
+        <label>Name</label>
+        <input class="form-control" name="name" value="<%=category.name%>">
+        <input hidden name="id" value="<%=category._id%>">
+        <button class="btn btn-primary" type="submit">Update</button>
+    </form>
+    <%}%>
+    <%if(edit==="subcategory"){%>
+    <h4>Edit Sub-Category</h4>
+    <form class="form-group" action="/subcategory/update" method="POST">
+        <label>Name</label>
+        <input  class="form-control" name="name" value="<%=subcategory.name%>">
+        <input hidden name="id" value="<%=subcategory._id%>">
+        <button class="btn btn-primary" type="submit">Update</button>
+
+    </form>
+
+    <%}%>
+        <%if(edit==="product"){%>
+    <h4>Edit product</h4>
+    <form class="form-group" action="/product/update" method="POST">
+        <label>Name</label>
+        <input class="form-control" name="name" value="<%=product.name%>">
+        <input hidden name="id" value="<%=product._id%>">
+        <button class="btn btn-primary" type="submit">Update</button>
+
+    </form>
+
+    <%}%>
+    </body>
+</html>
