@@ -1,32 +1,40 @@
 <html>
 
-    <head>
-        <script>
-            var arr = []
-            function add(name) {
-                document.getElementById('pos').innerHTML = ""
-                p = -1
-                for (i = 0; i < arr.length; i++) {
-                    if (arr[i].name == name)
-                        p = i;
-                }
-                if (p > -1) {
-                    arr[p].quantity++;
-                }
-                else {
-                    arr.push({ name, quantity: 1 })
-                }
-                arr.map(p => {
-                    document.getElementById('pos').innerHTML += `${p.name.toString()}---${p.quantity}<br>`
-                })
+<head>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+        var arr = []
+        function add(name, id) {
+            document.getElementById('pos').innerHTML = ""
+            p = -1
+            for (i = 0; i < arr.length; i++) {
+                if (arr[i].name == name)
+                    p = i;
             }
-        </script>
-    </head>
-    <body>
-        <%data.map(d=>{%>
-        <%=d.name%><button onclick="add(`<%=d.name%>`)">buy </button> <br>
-        <% })%>
-        <div id="pos"></div>
-    </body>
+            if (p > -1) {
+                arr[p].quantity++;
+            }
+            else {
+                arr.push({ name, quantity: 1, product: id })
+            }
+            arr.map(p => {
+                document.getElementById('pos').innerHTML += `${p.name.toString()}---${p.quantity}<br>`
+            })
+        }
+        function purchase() {
+            axios.post('/bill/trans', arr).then((data) => {
+                console.log(data)
+            })
+        }
+    </script>
+</head>
+
+<body>
+    <%data.map(d=>{%>
+    <%=d.name%><button onclick="add(`<%=d.name%>`,`<%=d._id%>`)">buy </button> <br>
+    <% })%>
+    <div id="pos"></div>
+    <button onclick="purchase()">Purchase</button>
+</body>
 
 </html>

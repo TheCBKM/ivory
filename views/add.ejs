@@ -57,9 +57,10 @@
 
         <%if(add=='productadd'){%>
     <form class="form-group" action="/product/add" method="POST">
-        Add into :- <%=name%>
+        Add into :- <%=name%><br>
         <input hidden name="subcategory" value="<%=id%>">
-        <input class="form-control" name="name">
+        Name:<input class="form-control" name="name">
+        Price<input class="form-control" name="price">
         <button class="btn btn-primary" type="submit">Add</button>
     </form>
     <%}%>

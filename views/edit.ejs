@@ -38,6 +38,8 @@
     <form class="form-group" action="/product/update" method="POST">
         <label>Name</label>
         <input class="form-control" name="name" value="<%=product.name%>">
+        <input class="form-control" name="price" value="<%=product.price%>">
+
         <input hidden name="id" value="<%=product._id%>">
         <button class="btn btn-primary" type="submit">Update</button>
 
