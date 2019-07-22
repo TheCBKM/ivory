@@ -1,0 +1,32 @@
+<html>
+
+    <head>
+        <script>
+            var arr = []
+            function add(name) {
+                document.getElementById('pos').innerHTML = ""
+                p = -1
+                for (i = 0; i < arr.length; i++) {
+                    if (arr[i].name == name)
+                        p = i;
+                }
+                if (p > -1) {
+                    arr[p].quantity++;
+                }
+                else {
+                    arr.push({ name, quantity: 1 })
+                }
+                arr.map(p => {
+                    document.getElementById('pos').innerHTML += `${p.name.toString()}---${p.quantity}<br>`
+                })
+            }
+        </script>
+    </head>
+    <body>
+        <%data.map(d=>{%>
+        <%=d.name%><button onclick="add(`<%=d.name%>`)">buy </button> <br>
+        <% })%>
+        <div id="pos"></div>
+    </body>
+
+</html>
