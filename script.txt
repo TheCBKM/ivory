@@ -1,0 +1,25 @@
+                                        Super Admin 
+                                            |
+                                            V
+                                        Coustomer Admin
+                                            | 
+                                            v
+                                        Manager 
+                                            |
+                                            V
+                                        Sales Employee
+
+
+Autority description:-
+
+Super Admin :can activate ,deactivate, create multiple  coustomer Admin
+
+Coustomer Admin:can create mltiple managers w.r.t. shops,view inventory detaiils
+
+Manager: can add products, create multiple employees only for given shops,
+        add/view inventory detaiils
+
+Sales Employee: can do billing,add products 
+
+
+

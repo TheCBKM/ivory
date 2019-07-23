@@ -3,8 +3,8 @@
 <head>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script>
-        var arr = []
-        function add(name, id) {
+        var arr = [], total = 0
+        function add(name, id, price) {
             document.getElementById('pos').innerHTML = ""
             p = -1
             for (i = 0; i < arr.length; i++) {
@@ -15,14 +15,23 @@
                 arr[p].quantity++;
             }
             else {
-                arr.push({ name, quantity: 1, product: id })
+                arr.push({ name, quantity: 1, product: id, price })
             }
+            total = 0
             arr.map(p => {
-                document.getElementById('pos').innerHTML += `${p.name.toString()}---${p.quantity}<br>`
+                total += p.quantity * p.price
             })
+            arr.map(p => {
+                document.getElementById('pos').innerHTML += `${p.name.toString()}---${p.quantity}----${p.price}<br>`
+            })
+            document.getElementById('total').innerHTML = `Total = ${total}`
         }
         function purchase() {
-            axios.post('/bill/trans', arr).then((data) => {
+            data = {
+                products: arr,
+                price: total
+            }
+            axios.post('/bill/trans', data).then((data) => {
                 console.log(data)
             })
         }
@@ -31,9 +40,10 @@
 
 <body>
     <%data.map(d=>{%>
-    <%=d.name%><button onclick="add(`<%=d.name%>`,`<%=d._id%>`)">buy </button> <br>
+    <%=d.name%><button onclick="add(`<%=d.name%>`,`<%=d._id%>`,`<%=d.price%>`)">buy </button> <br>
     <% })%>
     <div id="pos"></div>
+    <div id="total">Total = 0</div>
     <button onclick="purchase()">Purchase</button>
 </body>
 
