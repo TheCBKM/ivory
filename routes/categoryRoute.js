@@ -45,9 +45,22 @@ app.get("/update/:id", (req, res) => {
         try {
             console.log(req.body)
             var savePromise = await categoryServices.getCategorybyId(req.params.id);
-            res.render("edit",{edit:"category",category:savePromise})
+            res.render("edit", { edit: "category", category: savePromise })
         } catch (error) {
             console.log(error)
         }
     })();
 });
+
+app.get("/delete/:id", (req, res) => {
+    (async () => {
+        try {
+            console.log(req.params.id)
+            var productPromise = await  categoryServices.deleteCategoryById(req.params.id)
+            res.redirect('/product/view')
+        }
+        catch (error) {
+            console.log(error)
+        }
+    })();
+})

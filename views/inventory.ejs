@@ -6,7 +6,7 @@
     <link rel="stylesheet" type="text/css"
         href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
     <style>
-        a {
+          a {
             text-decoration: none;
             text-decoration-color: none
         }
@@ -31,6 +31,8 @@
         .category {
             background-color: rgb(216, 143, 34);
             /* border: pink dotted; */
+        
+            /* border: pink dotted; */
         }
     </style>
 </head>
@@ -38,36 +40,28 @@
 <body>
         <% include  partials/navbar%>
 
-
     <h1>Your Products List</h1>
     <div class="view">
         <ul class="category">
             <%categories.map(c=>{%>
-            <li> <%=c.name%> <a href="/category/update/<%=c._id%>"><i class="fa fa-edit"></i></a>
-                <!-- <a href="/category/delete/<%=c._id%>"><i class="fa fa-trash"></i></a> -->
+            <li> <%=c.name%>
             </li>
             <ul class="subcategory">
                 <%subCategories.map(sc=>{%>
                 <%if(sc.category.toString()==c._id.toString()){%>
-                <li><%=sc.name%> <a href="/subcategory/update/<%=sc._id%>"><i
-                            class="fa fa-edit"></i></a>
-                    <!-- <a href="/subcategory/delete/<%=sc._id%>"><i class="fa fa-trash"></i></a> -->
+                <li><%=sc.name%>
                 </li>
                 <ul class="product">
                     <%products.map(p=>{%>
                     <%if(p.subcategory.toString()==sc._id.toString()){%>
-                    <li><%=p.name%> <a href="/product/update/<%=p._id%>"><i class="fa fa-edit"></i></a>
-                        <!-- <a href="/product/delete/<%=p._id%>"><i class="fa fa-trash"></i></a></li> -->
-                    <% }})%>
-                    <li> <a href="/product/addhere/<%=sc._id%>/<%=sc.name%>/product"><i class="fa fa-plus"
-                        aria-hidden="true"></i></a></li>
+                    <li><%=p.name%> -- <%=p.available%> <a href="/inventory/add/<%=p.id%>"> <i class="fa fa-refresh"
+                                aria-hidden="true"></i></a>
+                        <% }})%>
                 </ul>
                 <% }})%>
-                <li> <a href="/product/addhere/<%=c._id%>/<%=c.name%>/subcategory"><i class="fa fa-plus"
-                            aria-hidden="true"></i></a></li>
+         
             </ul>
             <% })%>
-            <li> <a href="/category/add"><i class="fa fa-plus" aria-hidden="true"></i></a></li>
         </ul>
     </div>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"

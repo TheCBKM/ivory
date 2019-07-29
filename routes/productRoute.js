@@ -55,7 +55,7 @@ app.get("/update/:id", (req, res) => {
         try {
             console.log(req.body)
             var savePromise = await productServices.getProductybyId(req.params.id);
-            res.render("edit",{edit:"product",product:savePromise})
+            res.render("edit", { edit: "product", product: savePromise })
         } catch (error) {
             console.log(error)
         }
@@ -80,13 +80,25 @@ app.get("/addhere/:id/:name/:var", (req, res) => {
     (async () => {
         try {
             console.log(req.params);
-            if(req.params.var=="subcategory")
-            res.render('add', { add: "subcategory"+"add", id: req.params.id,name:req.params.name })
-            else if(req.params.var=="product")
-            res.render('add', { add: "product"+"add", id: req.params.id,name:req.params.name })                      
+            if (req.params.var == "subcategory")
+                res.render('add', { add: "subcategory" + "add", id: req.params.id, name: req.params.name })
+            else if (req.params.var == "product")
+                res.render('add', { add: "product" + "add", id: req.params.id, name: req.params.name })
         } catch (error) {
             console.log(error)
         }
     })();
 });
 
+app.get("/delete/:id", (req, res) => {
+    (async () => {
+        try {
+            console.log(req.params.id)
+            var productPromise = await  productServices.deleteProductById(req.params.id)
+            res.redirect('/product/view')
+        }
+        catch (error) {
+            console.log(error)
+        }
+    })();
+})

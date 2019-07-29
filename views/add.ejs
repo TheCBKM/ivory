@@ -12,8 +12,11 @@
 </head>
 
 <body>
+        <% include  partials/navbar%>
+
     <div class="add">
     <%if(add=='category'){%>
+        <h1>Add Main Category</h1>
     <form class="form-group" action="/category/add" method="POST">
         <input class="form-control" name="name">
         <button class="btn btn-primary" type="submit">Add</button>
@@ -47,6 +50,7 @@
     <%}%>
 
     <%if(add=='subcategoryadd'){%>
+        <h1>Add sub Category</h1>
     <form class="form-group" action="/subcategory/add" method="POST">
         Add into :- <%=name%>
         <input hidden name="category" value="<%=id%>">
@@ -56,6 +60,8 @@
     <%}%>
 
         <%if(add=='productadd'){%>
+            <h1>Add Product</h1>
+
     <form class="form-group" action="/product/add" method="POST">
         Add into :- <%=name%><br>
         <input hidden name="subcategory" value="<%=id%>">

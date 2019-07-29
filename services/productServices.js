@@ -18,7 +18,7 @@ const deleteProductById = function (prodId) {
     return productSchema.deleteOne({ "_id": prodId }).exec();
 }
 const updateProduct = function (param) {
-    return productSchema.update({ "_id": param.id }, param).exec();
+    return productSchema.updateOne({ "_id": param.id }, param).exec();
 }
 
 

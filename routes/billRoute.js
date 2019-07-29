@@ -23,8 +23,19 @@ app.post('/trans', (req, res) => {
         try {
 
             console.log(req.body)
+            req.body.products.map(p => {
+                (async () => {
+                    pro = {
+                        id: p.product,
+                        available: p.available
+                    }
+                    var productPromise = await productServices.updateProduct(pro);
+                })();
+
+
+            })
             var productPromise = await transactionServices.saveTransaction(req.body);
-            res.send(productPromise)
+            res.send({ data: productPromise, success: true })
         }
         catch (error) {
             console.log(error)
@@ -49,8 +60,20 @@ app.get('/trans', (req, res) => {
         try {
             var productPromise = await transactionServices.getTransaction();
             console.log(productPromise)
-            res.render('transactionview',{data:productPromise})
-            res.send(productPromise)
+            res.render('transactionview', { data: productPromise })
+            // res.send(productPromise)
+        }
+        catch (error) {
+            console.log(error)
+        }
+    })();
+})
+
+app.get('/trans/delete/:id', (req, res) => {
+    (async () => {
+        try {
+            var productPromise = await transactionServices.deleteTransactionById(req.params.id);
+            res.redirect('/bill/trans')
         }
         catch (error) {
             console.log(error)

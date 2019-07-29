@@ -2,9 +2,17 @@
 
 <head>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <style>
+    .col{
+        margin :5px
+    }
+    </style>
+    
     <script>
         var arr = [], total = 0
-        function add(name, id, price) {
+        function add(name, id, price, available) {
             document.getElementById('pos').innerHTML = ""
             p = -1
             for (i = 0; i < arr.length; i++) {
@@ -15,36 +23,131 @@
                 arr[p].quantity++;
             }
             else {
-                arr.push({ name, quantity: 1, product: id, price })
+                arr.push({ name, quantity: 1, product: id, price, available })
             }
             total = 0
             arr.map(p => {
                 total += p.quantity * p.price
             })
-            arr.map(p => {
-                document.getElementById('pos').innerHTML += `${p.name.toString()}---${p.quantity}----${p.price}<br>`
+            arr.map((p, i) => {
+                document.getElementById('pos').innerHTML += `
+                
+                <th scope="row">${i + 1}</th>
+      <td>${p.name.toString()}</td>
+      <td>${p.quantity}</td>
+      <td>${p.price}</td>
+      <td>${p.price * p.quantity}</td>
+      <td><button onclick='remove(${i})' class="btn btn-danger">remove</button></td>
+`
             })
-            document.getElementById('total').innerHTML = `Total = ${total}`
+            document.getElementById('total').innerHTML = `Total = ${total} `
+        }
+        function remove(i) {
+
+            arr.splice(i, 1);
+            document.getElementById('pos').innerHTML = ""
+
+            arr.map((p, i) => {
+                document.getElementById('pos').innerHTML += `
+                
+                <th scope="row">${i + 1}</th>
+      <td>${p.name.toString()}</td>
+      <td>${p.quantity}</td>
+      <td>${p.price}</td>
+      <td>${p.price * p.quantity}</td>
+      <td><button onclick='remove(${i})' class="btn btn-danger">remove</button></td>
+`
+            })
+            total = 0
+            arr.map(p => {
+                total += p.quantity * p.price
+            })
+            document.getElementById('total').innerHTML = `Total = ${total} `
         }
         function purchase() {
-            data = {
-                products: arr,
-                price: total
+            canbuy = true
+            for (i = 0; i < arr.length; i++) {
+                arr[i].available -= arr[i].quantity;
+                if (arr[i].available < 0) {
+                    alert(`cannot buy ${arr[i].name}`)
+                    canbuy = false
+                    return
+                }
             }
-            axios.post('/bill/trans', data).then((data) => {
-                console.log(data)
-            })
+            if (canbuy) {
+                data = {
+                    products: arr,
+                    price: total
+                }
+                axios.post('/bill/trans', data).then((data) => {
+                    console.log(data.data)
+                    if (data.data.success) {
+                        // window.location="/bill/trans"
+                    }
+                })
+            }
         }
     </script>
 </head>
 
 <body>
-    <%data.map(d=>{%>
-    <%=d.name%><button onclick="add(`<%=d.name%>`,`<%=d._id%>`,`<%=d.price%>`)">buy </button> <br>
-    <% })%>
-    <div id="pos"></div>
-    <div id="total">Total = 0</div>
-    <button onclick="purchase()">Purchase</button>
+        <% include  partials/navbar%>
+
+    <h1 align="center">Make Bill</h1>
+    <div align="center">
+        <br>
+        <div class="row">
+            <%data.map(d=>{%>
+            <div class="col col-md-6 mx-auto">
+
+                <%if(d.available<=0){%>
+                <button disabled class="btn btn-primary"
+                    onclick="add(`<%=d.name%>`,`<%=d._id%>`,`<%=d.price%>`,`<%=d.available%>`)"><%=d.name%>
+                </button>
+
+
+                <%}else{%>
+                
+   <button class="btn btn-primary" onclick="add(`<%=d.name%>`,`<%=d._id%>`,`<%=d.price%>`,`<%=d.available%>`)">
+                <%=d.name%> </button> <br>
+                <%}%>
+            </div> <% })%>
+        </div>
+        <br><br>
+        <div>
+
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Quanity</th>
+                        <th scope="col">rate</th>
+                        <th scope="col">price</th>
+                    </tr>
+                </thead>
+                <tbody id="pos">
+
+                </tbody>
+            </table>
+
+        </div>
+        <div id="total">Total = 0</div>
+        <button onclick="purchase()">Purchase</button>
+
+
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
 </body>
 
 </html>

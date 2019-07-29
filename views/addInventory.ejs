@@ -1,0 +1,22 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+</head>
+
+<body>
+        <% include  partials/navbar%>
+
+    <form class="form-group" action="/inventory/add" method="POST">
+        Add into :- <%=data.name%><br>
+        Currently available:-<%=data.available%><br>
+        <input class="form-group" name="add"type="number">
+        <input hidden name="id" value="<%=data.id%>">
+        <input   type="number" hidden name="available" value="<%=data.available%>">
+        <button class="btn btn-primary" type="submit">Add</button>
+    </form>
+</body>
+
+</html>

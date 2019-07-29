@@ -52,3 +52,16 @@ app.get("/update/:id", (req, res) => {
         }
     })();
 });
+
+app.get("/delete/:id", (req, res) => {
+    (async () => {
+        try {
+            console.log(req.params.id)
+            var productPromise = await  subCategoryServices.deleteSubCategoryById(req.params.id)
+            res.redirect('/product/view')
+        }
+        catch (error) {
+            console.log(error)
+        }
+    })();
+})
