@@ -12,14 +12,26 @@
     
     <script>
         var arr = [], total = 0
-        function add(name, id, price, available) {
+        function add(name, id, price, available,quantity) {
+
+       
             document.getElementById('pos').innerHTML = ""
             p = -1
             for (i = 0; i < arr.length; i++) {
                 if (arr[i].name == name)
                     p = i;
             }
+            // if((arr[p].available-arr[p].quantity)<0)
+            // {
+            //     alert("Can't be purchaced any more " )
+            //     return 0;
+            // }
             if (p > -1) {
+                // if(quantity){
+                //     alert(quantity)
+                //     arr[p].quantity=document.getElementById(`A${arr[p].product}`).value
+                // }
+                // else
                 arr[p].quantity++;
             }
             else {
@@ -37,13 +49,14 @@
       <td>${p.quantity}</td>
       <td>${p.price}</td>
       <td>${p.price * p.quantity}</td>
+      <td>${p.available-p.quantity}</td>
       <td><button onclick='remove(${i})' class="btn btn-danger">remove</button></td>
 `
             })
             document.getElementById('total').innerHTML = `Total = ${total} `
         }
         function remove(i) {
-
+// alert(i)
             arr.splice(i, 1);
             document.getElementById('pos').innerHTML = ""
 
@@ -54,7 +67,8 @@
       <td>${p.name.toString()}</td>
       <td>${p.quantity}</td>
       <td>${p.price}</td>
-      <td>${p.price * p.quantity}</td>
+      <td>${p.price*p.quantity}</td>
+      <td>${p.available}</td>
       <td><button onclick='remove(${i})' class="btn btn-danger">remove</button></td>
 `
             })
@@ -124,8 +138,11 @@
                         <th scope="col">#</th>
                         <th scope="col">Name</th>
                         <th scope="col">Quanity</th>
-                        <th scope="col">rate</th>
-                        <th scope="col">price</th>
+                        <th scope="col">Rate</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Available</th>
+                        <th scope="col">Remove</th>
+
                     </tr>
                 </thead>
                 <tbody id="pos">
