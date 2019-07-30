@@ -34,3 +34,37 @@ if (require.main === module) {
     run();
 }
 
+
+/*
+30 JUly 2019
+
+Features Added till now:-
+1. Products
+2. Sale
+3. Inventory
+4. Transactions
+
+Brief Details of above
+
+1. Poducts
+    In this Section We can Add/Update new
+        -Category
+        -Sub category 
+        -Product & Price
+
+2. Sale
+    In this Section We genrate bills
+    but with tracking of products available
+    in Inventory 
+
+3. Inventory 
+    In this section we can 
+    track The products availble 
+    an also refill/Add in the inventory
+
+4. Transactions 
+    Here We can See all the transaction 
+    with date and price 
+
+    
+*/
