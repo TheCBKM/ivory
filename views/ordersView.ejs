@@ -92,6 +92,8 @@
 
                 <td> <button type="button" onclick="diliver('<%=d._id%>')" class="btn btn-secondary">Dilivered</button>
                 </td>
+                <td> <button type="button" onclick="cancel('<%=d._id%>')" class="btn btn-secondary">Cancel</button>
+                </td>
                 <%}%>
             </tr>
 
@@ -109,6 +111,12 @@
 window.location.href="/order/trans/0"
         })
     }
+    function cancel(id){
+
+axios.get(`/order/cancel/${id}`).then(()=>{
+window.location.href="/order/trans/0"
+})
+}
 </script>
 
 

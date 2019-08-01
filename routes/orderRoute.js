@@ -4,6 +4,8 @@ const productServices = require('../services/productServices');
 const subCategoryServices = require('../services/subCategoryServices');
 const categoryServices = require('../services/categoryServices');
 const orderServices = require('../services/orderServices');
+const transactionServices = require('../services/transactionServices');
+
 
 app.get('/make', (req, res) => {
     (async () => {
@@ -80,9 +82,45 @@ app.get('/sold/:id', (req, res) => {
                 status:1
             }
             var productPromise = await orderServices.updateOrder(order);
+            var productPromise = await transactionServices.saveTransaction(req.body);
+
             console.log(productPromise)
            res.redirect('/order/trans/0')
             // res.send(productPromise)
+        }
+        catch (error) {
+            console.log(error)
+        }
+    })();
+})
+
+app.get('/cancel/:id', (req, res) => {
+    (async () => {
+        try {
+            var productPromise = await orderServices.getOrderbyId(req.params.id);
+
+            console.log(req.body)
+            productPromise.products.map(p => {
+                
+                (async () => {
+                    var prod = await productServices.getProductybyId( p.product);
+                    console.log(prod)
+
+                    pro = {
+                        id: p.product,
+                        available: p.quantity+prod.available
+                    }
+                    console.log(pro)
+                    var productPromise = await productServices.updateProduct(pro);
+                })();
+
+
+            })
+            order={
+                id:req.params.id,
+                status:2
+            }
+            var productPromise = await orderServices.updateOrder(order);            res.send({ data: productPromise, success: true })
         }
         catch (error) {
             console.log(error)
@@ -94,7 +132,7 @@ app.get('/trans/delete/:id', (req, res) => {
     (async () => {
         try {
             var productPromise = await orderServices.deleteOrderById(req.params.id);
-            res.redirect('/order/trans/0')
+            res.redirect(`/order/trans/0`)
         }
         catch (error) {
             console.log(error)
