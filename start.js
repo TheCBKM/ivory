@@ -1,11 +1,25 @@
 var express = require('express');
 var app = express();
-var routes=require('./routes')
+var routes = require('./routes')
+var session = require('express-session');
+
 app.set('view engine', 'ejs');
 
 const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json())
+
+app.use(session({secret: 'ssshhhhh',saveUninitialized: true,resave: true}));
+
+app.get('/setsession/:id',(req,res)=>{
+    req.session.email=req.params.id
+    console.log(req.session.email)
+    res.end('done');
+})
+
+app.get('/getsession',(req,res)=>{
+    console.log(req.session.email)
+})
 
 app.get('/', function (req, res) {
     res.render('index', { user: "Great User", title: "homepage" });
@@ -49,22 +63,22 @@ Brief Details of above
 1. Poducts
     In this Section We can Add/Update new
         -Category
-        -Sub category 
+        -Sub category
         -Product & Price
 
 2. Sale
     In this Section We genrate bills
     but with tracking of products available
-    in Inventory 
+    in Inventory
 
-3. Inventory 
-    In this section we can 
-    track The products availble 
+3. Inventory
+    In this section we can
+    track The products availble
     an also refill/Add in the inventory
 
-4. Transactions 
-    Here We can See all the transaction 
-    with date and price 
+4. Transactions
+    Here We can See all the transaction
+    with date and price
 
-    
+    Purchase order with image upload ---search()
 */

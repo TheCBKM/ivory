@@ -91,11 +91,11 @@
                     products: arr,
                     price: total
                 }
-                axios.post('/bill/trans', data).then((data) => {
+                axios.post('/order/trans', data).then((data) => {
                     console.log(data.data)
                     if (data.data.success) {
                         // window.location="/bill/trans"
-                        alert("Bill genrated" )
+                        alert("Order genrated" )
                         window.location.reload()
                     }
                 })
@@ -105,9 +105,9 @@
 </head>
 
 <body>
-        <% include  partials/navbar%>
+        <!-- <% include  partials/navbar%> -->
 
-    <h1 align="center">Make Bill</h1>
+    <h1 align="center">Make Order</h1>
     <div align="center">
         <br>
         <div class="row">
