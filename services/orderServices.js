@@ -17,7 +17,7 @@ const deleteOrderById = function (prodId) {
     return orderSchema.deleteOne({ "_id": prodId }).exec();
 }
 const updateOrder = function (param) {
-    return orderSchema.update({ "_id": param.id }, param).exec();
+    return orderSchema.updateOne({ "_id": param.id }, param).exec();
 }
 
 

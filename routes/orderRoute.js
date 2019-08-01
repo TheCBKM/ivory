@@ -61,10 +61,10 @@ app.get('/trans/:id', (req, res) => {
     (async () => {
         try {
             var productPromise = await orderServices.getOrder();
-            productPromise=productPromise.filter(p=>{
-                return p.status==Number(req.params.id)
+            productPromise = productPromise.filter(p => {
+                return p.status == Number(req.params.id)
             })
-            res.render('ordersView', { data: productPromise,status: Number(req.params.id)})
+            res.render('ordersView', { data: productPromise, status: Number(req.params.id) })
             // console.log(Number(req.params.id))
             // res.send(productPromise)
         }
@@ -77,15 +77,21 @@ app.get('/trans/:id', (req, res) => {
 app.get('/sold/:id', (req, res) => {
     (async () => {
         try {
-            order={
-                id:req.params.id,
-                status:1
+            order = {
+                id: req.params.id,
+                status: 1
             }
             var productPromise = await orderServices.updateOrder(order);
-            var productPromise = await transactionServices.saveTransaction(req.body);
+            var productPromise = await orderServices.getOrderbyId(req.params.id)
+            console.log(productPromise)
+            newTrans={
+                products:productPromise.products,
+                price:productPromise.price
+            }
+            var productPromise = await transactionServices.saveTransaction(newTrans);
 
             console.log(productPromise)
-           res.redirect('/order/trans/0')
+            res.redirect('/order/trans/0')
             // res.send(productPromise)
         }
         catch (error) {
@@ -101,14 +107,14 @@ app.get('/cancel/:id', (req, res) => {
 
             console.log(req.body)
             productPromise.products.map(p => {
-                
+
                 (async () => {
-                    var prod = await productServices.getProductybyId( p.product);
+                    var prod = await productServices.getProductybyId(p.product);
                     console.log(prod)
 
                     pro = {
                         id: p.product,
-                        available: p.quantity+prod.available
+                        available: p.quantity + prod.available
                     }
                     console.log(pro)
                     var productPromise = await productServices.updateProduct(pro);
@@ -116,11 +122,12 @@ app.get('/cancel/:id', (req, res) => {
 
 
             })
-            order={
-                id:req.params.id,
-                status:2
+            order = {
+                id: req.params.id,
+                status: 2
             }
-            var productPromise = await orderServices.updateOrder(order);            res.send({ data: productPromise, success: true })
+            var productPromise = await orderServices.updateOrder(order);
+            res.send({ data: productPromise, success: true })
         }
         catch (error) {
             console.log(error)
