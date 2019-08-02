@@ -10,28 +10,39 @@
             text-decoration: none;
             text-decoration-color: none
         }
+        .view{
+          margin-left: 30%;
+          width:30%
+       }
+       
+       .category-ul{
+         color:blue 
+       }
+       .category-li{
+         color:rgb(77, 6, 245) ;
+         background-color: rgb(51, 182, 223)
+       }
+       .subcategory-li{
+         color:red ;
+         background-color: rgb(167, 206, 27)
+       }
+       .product-li::before{
+         color:green ;
+         content: '\25BA';
+       }
+       .product-li{
+         color:rgb(218, 30, 192) ;
+         background-color: rgb(245, 167, 23)
+       }
+       .subcategory-li::before{
+         color:green ;
+         content: '\27A4';
+       }
 
-        .product {
-            background-color: rgb(156, 220, 236);
-            /* border: 3px red dotted */
-        }
-
-        .subcategory {
-            background-color: rgb(97, 187, 179);
-            /* border: 3px rgb(5, 1, 1) dotted */
-        }
-
-        .view {
-            width: 60%;
-            margin-left: 5%;
-            margin-top: 5%;
-            font-size: calc(1em + 0.5vw)
-        }
-
-        .category {
-            background-color: rgb(216, 143, 34);
-            /* border: pink dotted; */
-        }
+       .category-li::before{
+         color:green ;
+         content: '\276D';
+       }
     </style>
 </head>
 
@@ -41,33 +52,33 @@
 
     <h1>Your Products List</h1>
     <div class="view">
-        <ul class="category">
+        <ul class="category-ul">
             <%categories.map(c=>{%>
-            <li> <%=c.name%> <a href="/category/update/<%=c._id%>"><i class="fa fa-edit"></i></a>
+            <li class="category-li"> <%=c.name%> <a href="/category/update/<%=c._id%>"><i class="fa fa-edit"></i></a>
                 <!-- <a href="/category/delete/<%=c._id%>"><i class="fa fa-trash"></i></a> -->
             </li>
-            <ul class="subcategory">
+            <ul class="subcategory-ul">
                 <%subCategories.map(sc=>{%>
                 <%if(sc.category.toString()==c._id.toString()){%>
-                <li><%=sc.name%> <a href="/subcategory/update/<%=sc._id%>"><i
+                <li class="subcategory-li"><%=sc.name%> <a href="/subcategory/update/<%=sc._id%>"><i
                             class="fa fa-edit"></i></a>
                     <!-- <a href="/subcategory/delete/<%=sc._id%>"><i class="fa fa-trash"></i></a> -->
                 </li>
-                <ul class="product">
+                <ul class="product-ul">
                     <%products.map(p=>{%>
                     <%if(p.subcategory.toString()==sc._id.toString()){%>
-                    <li><%=p.name%> <a href="/product/update/<%=p._id%>"><i class="fa fa-edit"></i></a>
+                    <li class="product-li"><%=p.name%> <a href="/product/update/<%=p._id%>"><i class="fa fa-edit"></i></a>
                         <!-- <a href="/product/delete/<%=p._id%>"><i class="fa fa-trash"></i></a></li> -->
-                    <% }})%>
-                    <li> <a href="/product/addhere/<%=sc._id%>/<%=sc.name%>/product"><i class="fa fa-plus"
+                    <% }})%>    
+                    <li class="product-li"> <a href="/product/addhere/<%=sc._id%>/<%=sc.name%>/product"><i class="fa fa-plus"
                         aria-hidden="true"></i></a></li>
                 </ul>
                 <% }})%>
-                <li> <a href="/product/addhere/<%=c._id%>/<%=c.name%>/subcategory"><i class="fa fa-plus"
+                <li class="subcategory-li"> <a href="/product/addhere/<%=c._id%>/<%=c.name%>/subcategory"><i class="fa fa-plus"
                             aria-hidden="true"></i></a></li>
             </ul>
             <% })%>
-            <li> <a href="/category/add"><i class="fa fa-plus" aria-hidden="true"></i></a></li>
+            <li class="category-li"> <a href="/category/add"><i class="fa fa-plus" aria-hidden="true"></i></a></li>
         </ul>
     </div>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
