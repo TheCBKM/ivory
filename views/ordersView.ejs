@@ -24,8 +24,6 @@
                 <th scope="col">Price</th>
                 <th scope="col">Date</th>
                 <th scope="col">Action</th>
-
-
             </tr>
         </thead>
         <tbody>
@@ -96,28 +94,24 @@
                 </td>
                 <%}%>
             </tr>
-
             <%})%>
 
         </tbody>
     </table>
+    <script>
+        function diliver(id) {
 
+            axios.get(`/order/sold/${id}`).then(() => {
+                window.location.href = "/order/trans/0"
+            })
+        }
+        function cancel(id) {
 
-
-<script>
-    function diliver(id){
-
-        axios.get(`/order/sold/${id}`).then(()=>{
-window.location.href="/order/trans/0"
-        })
-    }
-    function cancel(id){
-
-axios.get(`/order/cancel/${id}`).then(()=>{
-window.location.href="/order/trans/0"
-})
-}
-</script>
+            axios.get(`/order/cancel/${id}`).then(() => {
+                window.location.href = "/order/trans/0"
+            })
+        }
+    </script>
 
 
 

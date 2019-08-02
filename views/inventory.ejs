@@ -10,51 +10,62 @@
             text-decoration: none;
             text-decoration-color: none
         }
+       .view{
+          margin-left: 30%;
+          width:30%
+       }
+       .category-ul{
+         color:blue 
+       }
+       .category-li{
+         color:rgb(77, 6, 245) ;
+         background-color: rgb(32, 193, 241)
+       }
+       .subcategory-li{
+         color:red ;
+         background-color: rgb(167, 206, 27)
+       }
+       .product-li::before{
+         color:green ;
+         content: '\25BA';
+       }
+       .product-li{
+         color:rgb(218, 30, 192) ;
+         background-color: rgb(245, 167, 23)
+       }
+       .subcategory-li::before{
+         color:green ;
+         content: '\27A4';
+       }
 
-        .product {
-            background-color: rgb(156, 220, 236);
-            /* border: 3px red dotted */
-        }
-
-        .subcategory {
-            background-color: rgb(97, 187, 179);
-            /* border: 3px rgb(5, 1, 1) dotted */
-        }
-
-        .view {
-            width: 60%;
-            margin-left: 5%;
-            margin-top: 5%;
-            font-size: calc(1em + 0.5vw)
-        }
-
-        .category {
-            background-color: rgb(216, 143, 34);
-            /* border: pink dotted; */
+       .category-li::before{
+         color:green ;
+         content: '\276D';
+       }
         
-            /* border: pink dotted; */
-        }
+
     </style>
 </head>
 
 <body>
         <% include  partials/navbar%>
 
-    <h1>Your Inventory</h1>
     <div class="view">
-        <ul class="category">
+            <h1>Your Inventory</h1>
+
+        <ul class="category-ul" >
             <%categories.map(c=>{%>
-            <li> <%=c.name%>
+            <li class="category-li"> <%=c.name%>
             </li>
-            <ul class="subcategory">
+            <ul class=subcategory-ul ">
                 <%subCategories.map(sc=>{%>
                 <%if(sc.category.toString()==c._id.toString()){%>
-                <li><%=sc.name%>
+                <li class=subcategory-li><%=sc.name%>
                 </li>
-                <ul class="product">
+                <ul class="product-ul">
                     <%products.map(p=>{%>
                     <%if(p.subcategory.toString()==sc._id.toString()){%>
-                    <li><%=p.name%> -- <%=p.available%> <a href="/inventory/add/<%=p.id%>"> <i class="fa fa-refresh"
+                    <li class="product-li"><%=p.name%> -- <%=p.available%> <a href="/inventory/add/<%=p.id%>"> <i class="fa fa-refresh"
                                 aria-hidden="true"></i></a>
                         <% }})%>
                 </ul>
