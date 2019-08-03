@@ -5,16 +5,58 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <style>
-    .col{
-        margin :5px
-    }
+        .col {
+            margin: 5px
+        }
+
+        .myButton {
+            -moz-box-shadow: 0px 10px 14px -7px #276873;
+            -webkit-box-shadow: 0px 10px 14px -7px #276873;
+            box-shadow: 0px 10px 14px -7px #276873;
+            background: -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #599bb3), color-stop(1, #408c99));
+            background: -moz-linear-gradient(top, #599bb3 5%, #408c99 100%);
+            background: -webkit-linear-gradient(top, #599bb3 5%, #408c99 100%);
+            background: -o-linear-gradient(top, #599bb3 5%, #408c99 100%);
+            background: -ms-linear-gradient(top, #599bb3 5%, #408c99 100%);
+            background: linear-gradient(to bottom, #599bb3 5%, #408c99 100%);
+            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#599bb3', endColorstr='#408c99', GradientType=0);
+            background-color: #599bb3;
+            -moz-border-radius: 8px;
+            -webkit-border-radius: 8px;
+            border-radius: 8px;
+            display: inline-block;
+            cursor: pointer;
+            color: #ffffff;
+            font-family: Arial;
+            font-size: 20px;
+            font-weight: bold;
+            padding: 17px 32px;
+            text-decoration: none;
+            text-shadow: 0px 1px 0px #3d768a;
+        }
+
+        .myButton:hover {
+            background: -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #408c99), color-stop(1, #599bb3));
+            background: -moz-linear-gradient(top, #408c99 5%, #599bb3 100%);
+            background: -webkit-linear-gradient(top, #408c99 5%, #599bb3 100%);
+            background: -o-linear-gradient(top, #408c99 5%, #599bb3 100%);
+            background: -ms-linear-gradient(top, #408c99 5%, #599bb3 100%);
+            background: linear-gradient(to bottom, #408c99 5%, #599bb3 100%);
+            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#408c99', endColorstr='#599bb3', GradientType=0);
+            background-color: #408c99;
+        }
+
+        .myButton:active {
+            position: relative;
+            top: 1px;
+        }
     </style>
-    
+
     <script>
         var arr = [], total = 0
-        function add(name, id, price, available,quantity) {
+        function add(name, id, price, available, quantity) {
 
-       
+
             document.getElementById('pos').innerHTML = ""
             p = -1
             for (i = 0; i < arr.length; i++) {
@@ -49,14 +91,13 @@
       <td>${p.quantity}</td>
       <td>${p.price}</td>
       <td>${p.price * p.quantity}</td>
-      <td>${p.available-p.quantity}</td>
+      <td>${p.available - p.quantity}</td>
       <td><button onclick='remove(${i})' class="btn btn-danger">remove</button></td>
-`
-            })
+` })
             document.getElementById('total').innerHTML = `Total = ${total} `
         }
         function remove(i) {
-// alert(i)
+            // alert(i)
             arr.splice(i, 1);
             document.getElementById('pos').innerHTML = ""
 
@@ -65,7 +106,7 @@
       <td>${p.name.toString()}</td>
       <td>${p.quantity}</td>
       <td>${p.price}</td>
-      <td>${p.price*p.quantity}</td>
+      <td>${p.price * p.quantity}</td>
       <td>${p.available}</td>
       <td><button onclick='remove(${i})' class="btn btn-danger">remove</button></td>
 `
@@ -95,42 +136,23 @@
                     console.log(data.data)
                     if (data.data.success) {
                         // window.location="/bill/trans"
-                        alert("Order genrated" )
+                        alert("order genrated")
                         window.location.reload()
                     }
                 })
+
+
+
             }
         }
     </script>
 </head>
 
 <body>
-        <!-- <% include  partials/navbar%> -->
+    <h1 align="center">Make Bill</h1>
+    <div class="row">
 
-    <h1 align="center">Make Order</h1>
-    <div align="center">
-        <br>
-        <div class="row">
-            <%data.map(d=>{%>
-            <div class="col col-md-6 mx-auto">
-
-                <%if(d.available<=0){%>
-                <button disabled class="btn btn-primary"
-                    onclick="add(`<%=d.name%>`,`<%=d._id%>`,`<%=d.price%>`,`<%=d.available%>`)"><%=d.name%>
-                </button>
-
-
-                <%}else{%>
-                
-   <button class="btn btn-primary" onclick="add(`<%=d.name%>`,`<%=d._id%>`,`<%=d.price%>`,`<%=d.available%>`)">
-                <%=d.name%> </button> <br>
-                <%}%>
-            </div> <% })%>
-        </div>
-        <br><br>
-        <div>
-
-
+        <div class="col col-md-6">
             <table class="table">
                 <thead>
                     <tr>
@@ -148,23 +170,49 @@
 
                 </tbody>
             </table>
-
+            <div aligin="centre" style="width: 100%;text-align: center">
+                <div id="total">Total = 0</div>
+                <button class="btn btn-success" onclick="purchase()">Purchase</button>
+            </div>
         </div>
-        <div id="total">Total = 0</div>
-        <button onclick="purchase()">Purchase</button>
+        <div class="col col-md-5">
+
+            <div class="row">
+                <%data.map(d=>{%>
+                <div class="col col-md-4 mx-auto">
+
+                    <%if(d.available<=0){%>
+                    <button disabled class="btn btn-primary myButton"
+                        onclick="add(`<%=d.name%>`,`<%=d._id%>`,`<%=d.price%>`,`<%=d.available%>`)"><%=d.name%>
+                    </button>
 
 
-    </div>
+                    <%}else{%>
 
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-        crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-        crossorigin="anonymous"></script>
+                    <button class="btn btn-primary myButton"
+                        onclick="add(`<%=d.name%>`,`<%=d._id%>`,`<%=d.price%>`,`<%=d.available%>`)">
+                        <%=d.name%> </button> <br>
+                    <%}%>
+            </div> <% })%>
+                </div>
+
+            </div>
+        </div>
+
+
+
+
+
+
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"></script>
 </body>
 
 </html>

@@ -4,11 +4,16 @@ const productServices = require('../services/productServices');
 const subCategoryServices = require('../services/subCategoryServices');
 const categoryServices = require('../services/categoryServices');
 const transactionServices = require('../services/transactionServices');
+const {shopauth}= require('../middleware/auth')
 
-app.get('/make', (req, res) => {
+app.get('/make',shopauth, (req, res) => {
     (async () => {
         try {
-            var productPromise = await productServices.getProduct();
+            params={
+                sid:req.session.sid
+            }
+            console.log(req.session)
+            var productPromise = await productServices.getProduct(params);
             // console.log(productPromise)
             res.render('bill', { data: productPromise })
         }
@@ -18,7 +23,7 @@ app.get('/make', (req, res) => {
     })();
 })
 
-app.post('/trans', (req, res) => {
+app.post('/trans',shopauth, (req, res) => {
     (async () => {
         try {
 
@@ -34,7 +39,9 @@ app.post('/trans', (req, res) => {
 
 
             })
-            var productPromise = await transactionServices.saveTransaction(req.body);
+            save=req.body;
+            save.sid=req.session.sid
+            var productPromise = await transactionServices.saveTransaction(save);
             res.send({ data: productPromise, success: true })
         }
         catch (error) {
@@ -42,11 +49,14 @@ app.post('/trans', (req, res) => {
         }
     })();
 })
-app.get('/view', (req, res) => {
+app.get('/view',shopauth, (req, res) => {
     (async () => {
         try {
+            params={
+                sid:req.session.sid
+            }
             console.log("trans")
-            var productPromise = await transactionServices.getTransaction();
+            var productPromise = await transactionServices.getTransaction(params);
             console.log(productPromise)
             res.send(productPromise)
         }
@@ -55,10 +65,13 @@ app.get('/view', (req, res) => {
         }
     })();
 })
-app.get('/trans', (req, res) => {
+app.get('/trans',shopauth, (req, res) => {
     (async () => {
         try {
-            var productPromise = await transactionServices.getTransaction();
+            params={
+                sid:req.session.sid
+            }
+            var productPromise = await transactionServices.getTransaction(params);
             console.log(productPromise)
             res.render('transactionview', { data: productPromise })
             // res.send(productPromise)
@@ -69,7 +82,7 @@ app.get('/trans', (req, res) => {
     })();
 })
 
-app.get('/trans/delete/:id', (req, res) => {
+app.get('/trans/delete/:id',shopauth, (req, res) => {
     (async () => {
         try {
             var productPromise = await transactionServices.deleteTransactionById(req.params.id);

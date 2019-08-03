@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Show Shop</title>
+</head>
+
+<body>
+    Welcome <%=profile.name%> Your credits left  100
+    <ul>
+        <%data.map(d=>{%>
+        <li><%=d.name%>-----<%=d.phone%>------<%=d.address%> <a href="/order/make/<%=d._id%>">Buy HERE</a></li>
+        <% })%>
+    </ul>
+</body>
+
+</html>

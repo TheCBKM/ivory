@@ -2,10 +2,10 @@ const categorySchema = require('../models/category');
 const mongoose = require('mongoose');
 
 const getCategory = function (params) {
-    return categorySchema.find().exec();
+    return categorySchema.find({ sid: mongoose.Types.ObjectId(params.sid.toString()) }).exec();
 }
 const getCategorybyId = function (params) {
-    return categorySchema.findOne({ "_id": params }).exec();
+    return categorySchema.findOne({ "_id": params}).exec();
 }
 const saveCategory = function (productObj) {
     let prod = new categorySchema(productObj);

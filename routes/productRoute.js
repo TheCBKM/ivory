@@ -3,14 +3,15 @@ const app = module.exports = require('express')();
 const productServices = require('../services/productServices');
 const subCategoryServices = require('../services/subCategoryServices');
 const categoryServices = require('../services/categoryServices');
+const {shopauth}= require('../middleware/auth')
 
-
-
-
-app.get("/add", (req, res) => {
+app.get("/add",shopauth, (req, res) => {
     (async () => {
         try {
-            var productPromise = await subCategoryServices.getSubCategory(req);
+            params = {
+                sid: req.session.sid
+            }
+            var productPromise = await subCategoryServices.getSubCategory(params);
             res.render('add', { add: "product", subcategories: productPromise })
         } catch (error) {
             console.log(error)
@@ -19,7 +20,7 @@ app.get("/add", (req, res) => {
 });
 
 
-app.post("/add", (req, res) => {
+app.post("/add",shopauth, (req, res) => {
     (async () => {
         try {
             console.log(req.body)
@@ -28,9 +29,9 @@ app.post("/add", (req, res) => {
             console.log(subPromise)
 
             product.category = subPromise.category
-            console.log(product)
+            product.sid =req.session.sid
+                console.log(product)
             var savePromise = await productServices.saveProduct(product);
-            var productPromise = await productServices.getProduct();
             res.redirect("/product/view")
         } catch (error) {
             console.log(error)
@@ -38,7 +39,7 @@ app.post("/add", (req, res) => {
     })();
 });
 
-app.post("/update", (req, res) => {
+app.post("/update",shopauth, (req, res) => {
     (async () => {
         try {
             console.log(req.body)
@@ -50,7 +51,7 @@ app.post("/update", (req, res) => {
     })();
 });
 
-app.get("/update/:id", (req, res) => {
+app.get("/update/:id",shopauth, (req, res) => {
     (async () => {
         try {
             console.log(req.body)
@@ -62,12 +63,15 @@ app.get("/update/:id", (req, res) => {
     })();
 });
 
-app.get("/view", (req, res) => {
+app.get("/view",shopauth, (req, res) => {
     (async () => {
         try {
-            var productPromise = await productServices.getProduct();
-            var subcatPromise = await subCategoryServices.getSubCategory();
-            var catPromise = await categoryServices.getCategory();
+            params = {
+                sid: req.session.sid
+            }
+            var productPromise = await productServices.getProduct(params);
+            var subcatPromise = await subCategoryServices.getSubCategory(params);
+            var catPromise = await categoryServices.getCategory(params);
             res.render('viewall', { products: productPromise, subCategories: subcatPromise, categories: catPromise })
         } catch (error) {
             console.log(error)
@@ -76,7 +80,7 @@ app.get("/view", (req, res) => {
 });
 
 
-app.get("/addhere/:id/:name/:var", (req, res) => {
+app.get("/addhere/:id/:name/:var",shopauth, (req, res) => {
     (async () => {
         try {
             console.log(req.params);
@@ -90,11 +94,11 @@ app.get("/addhere/:id/:name/:var", (req, res) => {
     })();
 });
 
-app.get("/delete/:id", (req, res) => {
+app.get("/delete/:id",shopauth, (req, res) => {
     (async () => {
         try {
             console.log(req.params.id)
-            var productPromise = await  productServices.deleteProductById(req.params.id)
+            var productPromise = await productServices.deleteProductById(req.params.id)
             res.redirect('/product/view')
         }
         catch (error) {

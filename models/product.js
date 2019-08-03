@@ -26,6 +26,11 @@ const productSchema=mongoose.Schema({
     price:{
         type:Number,
         default:0
+    },
+    sid:{
+        type: Schema.Types.ObjectId,
+        ref: 'shop',
+        required: true
     }
 },{timestamps:true})
 

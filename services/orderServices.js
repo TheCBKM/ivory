@@ -3,11 +3,14 @@ const mongoose = require('mongoose');
 
 const getOrder = function (params) {
     // console.log(params.user._id.toString())
-    return orderSchema.find().populate('products.product').exec();
+    return orderSchema.find({ sid: mongoose.Types.ObjectId(params.sid.toString()) }).populate('products.product').populate('c   id').exec();
     // sort({'createdAt':-1}).skip(parseResult.skip).limit(parseResult.limit).populate('category', 'name').populate('subcategory','name').populate('company'
 }   
 const getOrderbyId = function (params) {
     return orderSchema.findOne({ "_id": params }).exec();
+}
+const getOrderbyCoustomer = function (params) {
+    return orderSchema.findOne({ cid: mongoose.Types.ObjectId(params.toString()) }).exec();
 }
 const saveOrder = function (productObj) {
     let prod = new orderSchema(productObj);
@@ -27,4 +30,5 @@ module.exports = {
     saveOrder,
     deleteOrderById,
     updateOrder,
+    getOrderbyCoustomer
 }

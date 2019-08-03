@@ -3,14 +3,18 @@ const app = module.exports = require('express')();
 const productServices = require('../services/productServices');
 const subCategoryServices = require('../services/subCategoryServices');
 const categoryServices = require('../services/categoryServices');
+const {shopauth}= require('../middleware/auth')
 
 
-app.get("/view", (req, res) => {
+app.get("/view",shopauth, (req, res) => {
     (async () => {
         try {
-            var productPromise = await productServices.getProduct();
-            var subcatPromise = await subCategoryServices.getSubCategory();
-            var catPromise = await categoryServices.getCategory();
+            params={
+                sid:req.session.sid
+            }
+            var productPromise = await productServices.getProduct(params);
+            var subcatPromise = await subCategoryServices.getSubCategory(params);
+            var catPromise = await categoryServices.getCategory(params);
             res.render('inventory', { products: productPromise, subCategories: subcatPromise, categories: catPromise })
         } catch (error) {
             console.log(error)
@@ -18,7 +22,7 @@ app.get("/view", (req, res) => {
     })();
 });
 
-app.get("/add/:id", (req, res) => {
+app.get("/add/:id",shopauth, (req, res) => {
     (async () => {
         try {
             console.log(req.params.id)
@@ -31,7 +35,7 @@ app.get("/add/:id", (req, res) => {
     })();
 });
 
-app.post("/add", (req, res) => {
+app.post("/add",shopauth, (req, res) => {
     (async () => {
         try {
             console.log(req.body)

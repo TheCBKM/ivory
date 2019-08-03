@@ -11,6 +11,11 @@ const categorySchema=mongoose.Schema({
     available:{
         type:Number,
         default:0
+    },
+    sid:{
+        type: Schema.Types.ObjectId,
+        ref: 'shop',
+        required: true
     }
 },{timestamps:true})
 

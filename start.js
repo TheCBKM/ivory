@@ -9,7 +9,7 @@ const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json())
 
-app.use(session({secret: 'ssshhhhh',saveUninitialized: true,resave: true}));
+app.use(session({secret: 'rajaram1234',saveUninitialized: true,resave: true}));
 
 app.get('/setsession/:id',(req,res)=>{
     req.session.email=req.params.id

@@ -19,6 +19,11 @@ const transactionSchema = mongoose.Schema({
     },
     phone:{
         type:Number
+    },
+    sid:{
+        type: Schema.Types.ObjectId,
+        ref: 'shop',
+        required: true
     }
 
 },{timestamps:true})

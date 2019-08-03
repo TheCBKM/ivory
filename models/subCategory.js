@@ -12,6 +12,11 @@ const subCategorySchema=mongoose.Schema({
         ref: 'category',
         required: true,
     },
+    sid:{
+        type: Schema.Types.ObjectId,
+        ref: 'shop',
+        required: true
+    }
    
 },{timestamps:true})
 

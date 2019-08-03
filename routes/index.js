@@ -6,5 +6,7 @@ app.use('/subcategory', require('./subCategoryRoute'));
 app.use('/bill', require('./billRoute'));
 app.use('/inventory', require('./inventoryRoute'));
 app.use('/order', require('./orderRoute'));
+app.use('/coustomer', require('./coustomerRoute'));
+app.use('/shop', require('./shopRoute'));
 
 

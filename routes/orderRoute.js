@@ -6,12 +6,21 @@ const categoryServices = require('../services/categoryServices');
 const orderServices = require('../services/orderServices');
 const transactionServices = require('../services/transactionServices');
 
+const shopServices = require('../services/shopServices');
+const coustomerServices = require('../services/coustomerServices');
 
-app.get('/make', (req, res) => {
+const {shopauth,coustomerauth}= require('../middleware/auth')
+
+
+app.get('/make/:id',coustomerauth, (req, res) => {
     (async () => {
         try {
-            var productPromise = await productServices.getProduct();
-            // console.log(productPromise)
+            params = {
+                sid: req.params.id
+            }
+            console.log(params.sid)
+            var productPromise = await productServices.getProduct(params);
+            console.log(productPromise)
             res.render('order', { data: productPromise })
         }
         catch (error) {
@@ -20,10 +29,9 @@ app.get('/make', (req, res) => {
     })();
 })
 
-app.post('/trans', (req, res) => {
+app.post('/trans',coustomerauth, (req, res) => {
     (async () => {
         try {
-
             console.log(req.body)
             req.body.products.map(p => {
                 (async () => {
@@ -33,10 +41,11 @@ app.post('/trans', (req, res) => {
                     }
                     var productPromise = await productServices.updateProduct(pro);
                 })();
-
-
             })
-            var productPromise = await orderServices.saveOrder(req.body);
+            save = req.body
+            save.sid = req.session.sid
+            save.cid=req.session.cid
+            var productPromise = await orderServices.saveOrder(save);
             res.send({ data: productPromise, success: true })
         }
         catch (error) {
@@ -44,11 +53,14 @@ app.post('/trans', (req, res) => {
         }
     })();
 })
-app.get('/view', (req, res) => {
+app.get('/view',shopauth, (req, res) => {
     (async () => {
         try {
+            params = {
+                sid: req.session.sid
+            }
             console.log("trans")
-            var productPromise = await orderServices.getOrder();
+            var productPromise = await orderServices.getOrder(params);
             console.log(productPromise)
             res.send(productPromise)
         }
@@ -57,13 +69,17 @@ app.get('/view', (req, res) => {
         }
     })();
 })
-app.get('/trans/:id', (req, res) => {
+app.get('/trans/:id',shopauth, (req, res) => {
     (async () => {
         try {
-            var productPromise = await orderServices.getOrder();
+            params = {
+                sid: req.session.sid
+            }
+            var productPromise = await orderServices.getOrder(params);
             productPromise = productPromise.filter(p => {
                 return p.status == Number(req.params.id)
             })
+            console.log(productPromise)
             res.render('ordersView', { data: productPromise, status: Number(req.params.id) })
             // console.log(Number(req.params.id))
             // res.send(productPromise)
@@ -74,7 +90,7 @@ app.get('/trans/:id', (req, res) => {
     })();
 })
 
-app.get('/sold/:id', (req, res) => {
+app.get('/sold/:id',shopauth, (req, res) => {
     (async () => {
         try {
             order = {
@@ -84,10 +100,12 @@ app.get('/sold/:id', (req, res) => {
             var productPromise = await orderServices.updateOrder(order);
             var productPromise = await orderServices.getOrderbyId(req.params.id)
             console.log(productPromise)
-            newTrans={
-                products:productPromise.products,
-                price:productPromise.price
+            newTrans = {
+                products: productPromise.products,
+                price: productPromise.price,
+                sid: req.session.sid
             }
+
             var productPromise = await transactionServices.saveTransaction(newTrans);
 
             console.log(productPromise)
@@ -100,7 +118,7 @@ app.get('/sold/:id', (req, res) => {
     })();
 })
 
-app.get('/cancel/:id', (req, res) => {
+app.get('/cancel/:id',shopauth, (req, res) => {
     (async () => {
         try {
             var productPromise = await orderServices.getOrderbyId(req.params.id);
@@ -135,11 +153,25 @@ app.get('/cancel/:id', (req, res) => {
     })();
 })
 
-app.get('/trans/delete/:id', (req, res) => {
+app.get('/trans/delete/:id',shopauth, (req, res) => {
     (async () => {
         try {
             var productPromise = await orderServices.deleteOrderById(req.params.id);
             res.redirect(`/order/trans/0`)
+        }
+        catch (error) {
+            console.log(error)
+        }
+    })();
+})
+
+
+app.get('/shopshow',coustomerauth, (req, res) => {
+    (async () => {
+        try {
+            coustPromise=await coustomerServices.getCoustomerbyId(req.session.cid)
+            shopPromise = await shopServices.getShops()
+            res.render('showshop',{data:shopPromise,profile:coustPromise})
         }
         catch (error) {
             console.log(error)

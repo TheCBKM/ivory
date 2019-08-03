@@ -22,6 +22,16 @@ const orderSchema = mongoose.Schema({
         default: 0
         //0-active 1-sold 2-cancel
     },
+    sid:{
+        type: Schema.Types.ObjectId,
+        ref: 'shop',
+        required: true
+    },
+    cid:{
+        type: Schema.Types.ObjectId,
+        ref: 'coustomer',
+        required: true
+    },
 
 },{timestamps:true})
 

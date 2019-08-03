@@ -2,7 +2,7 @@ const subCategorySchema = require('../models/subCategory');
 const mongoose = require('mongoose');
 
 const getSubCategory = function (params) {
-    return subCategorySchema.find().exec();
+    return subCategorySchema.find({ sid: mongoose.Types.ObjectId(params.sid.toString()) }).exec();
 }
 
 const getSubCategorybyId = function (params) {
