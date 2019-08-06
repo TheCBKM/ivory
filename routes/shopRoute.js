@@ -19,6 +19,17 @@ app.post("/login", (req, res) => {
         }
     })();
 });
+app.get('/logout', (req, res) => {
+    (async () => {
+        try {
+            req.session.destroy();
+            res.redirect('login')
+        }
+        catch (err) {
+            console.log(err)
+        }
+    })();
+})
 
 app.get('/login', (req, res) => {
     (async () => {

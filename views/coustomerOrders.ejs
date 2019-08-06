@@ -12,7 +12,7 @@
 </head>
 
 <body>
-    <% include  partials/navbar%>
+    <% include  partials/coustomerNav%>
 
 
 
@@ -23,7 +23,7 @@
                 <th scope="col">ID</th>
                 <th scope="col">Price</th>
                 <th scope="col">Date</th>
-                <th scope="col">Action</th>
+                <th scope="col">Status</th>
             </tr>
         </thead>
         <tbody>
@@ -33,7 +33,20 @@
                 <td><%=d._id%></td>
                 <td><%=d.price%></td>
                 <td><%=d.createdAt%></td>
-                <td><a href="/order/trans/delete/<%=d._id%>">delete</a></td>
+                <!-- <td><a href="/order/trans/delete/<%=d._id%>">delete</a></td> -->
+                <td>
+                <%if(d.status==0){%>
+Active
+
+                    <%}else if(d.status==1){%>
+Sold
+
+                        <%}else if(d.status==2){%>
+                            
+                           Cancel 
+                            <%} %>
+                        </td>
+
                 <td>
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#A<%=d._id%>">
                         View
@@ -79,10 +92,10 @@
                                         </tbody>
                                     </table>
                                     <ul>
-                                    <li>Name:- <%=d.cid.name%></li>
-                                    <li>phone:- <%=d.cid.phone%></li>
-                                    <li>address:- <%=d.cid.address%></li>
-                                </ul>
+                                        <li>Name:- <%=d.sid.name%></li>
+                                        <li>phone:- <%=d.sid.phone%></li>
+                                        <li>address:- <%=d.sid.address%></li>
+                                    </ul>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -91,41 +104,7 @@
                         </div>
                     </div>
                 </td>
-                <%if(status==0){%>
-
-                <td> <button type="button" onclick="diliver('<%=d._id%>')" class="btn btn-secondary">Delivered</button>
-                </td>
-                
-                <td> <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#C<%=d._id%>">
-                        Call
-                    </button>
-
-                    <div class="modal fade" id="C<%=d._id%>" tabindex="-1" role="dialog"
-                            aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">Delivery Boy</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-    
-                                        <ul>
-                                        <li>Sudeep:- 9845237812</li>
-                                        <li>Pradeep:- 756138234</li>
-                                        
-                                    </ul>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                </td>
-                <%}%>
+              
             </tr>
             <%})%>
 

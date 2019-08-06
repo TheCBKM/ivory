@@ -18,10 +18,12 @@ app.get('/make/:id',coustomerauth, (req, res) => {
             params = {
                 sid: req.params.id
             }
+            req.session.sid=req.params.id
             console.log(params.sid)
             var productPromise = await productServices.getProduct(params);
             console.log(productPromise)
-            res.render('order', { data: productPromise })
+             coustomer=await coustomerServices.getCoustomerbyId(req.session.cid)
+            res.render('order', { data: productPromise,profile:coustomer })
         }
         catch (error) {
             console.log(error)
@@ -80,7 +82,7 @@ app.get('/trans/:id',shopauth, (req, res) => {
                 return p.status == Number(req.params.id)
             })
             console.log(productPromise)
-            res.render('ordersView', { data: productPromise, status: Number(req.params.id) })
+            res.render('ordersView', { data: productPromise, status: Number(req.params.id)})
             // console.log(Number(req.params.id))
             // res.send(productPromise)
         }
@@ -169,9 +171,9 @@ app.get('/trans/delete/:id',shopauth, (req, res) => {
 app.get('/shopshow',coustomerauth, (req, res) => {
     (async () => {
         try {
-            coustPromise=await coustomerServices.getCoustomerbyId(req.session.cid)
             shopPromise = await shopServices.getShops()
-            res.render('showshop',{data:shopPromise,profile:coustPromise})
+
+            res.render('showshop',{data:shopPromise,profile:req.session.coustomer})
         }
         catch (error) {
             console.log(error)
