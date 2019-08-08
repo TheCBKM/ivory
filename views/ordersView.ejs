@@ -62,7 +62,8 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <%d.products.map((p,i)=>{%>
+                                            <%d.products.map((p,i)=>{
+                                                if(p.product){%>
                                             <tr>
                                                 <td><%=i+1%></td>
                                                 <td><%=p.product.name%></td>
@@ -75,7 +76,7 @@
                                             </tr>
 
 
-                                            <% })%>
+                                            <%} })%>
                                         </tbody>
                                     </table>
                                     <ul>

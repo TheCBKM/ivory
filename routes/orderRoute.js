@@ -34,6 +34,8 @@ app.get('/make/:id',coustomerauth, (req, res) => {
 app.post('/trans',coustomerauth, (req, res) => {
     (async () => {
         try {
+            console.log("----------")
+
             console.log(req.body)
             req.body.products.map(p => {
                 (async () => {
@@ -47,6 +49,7 @@ app.post('/trans',coustomerauth, (req, res) => {
             save = req.body
             save.sid = req.session.sid
             save.cid=req.session.cid
+            console.log(save.products)
             var productPromise = await orderServices.saveOrder(save);
             res.send({ data: productPromise, success: true })
         }
@@ -63,7 +66,7 @@ app.get('/view',shopauth, (req, res) => {
             }
             console.log("trans")
             var productPromise = await orderServices.getOrder(params);
-            console.log(productPromise)
+            console.log(productPromise.products)
             res.send(productPromise)
         }
         catch (error) {
@@ -83,8 +86,7 @@ app.get('/trans/:id',shopauth, (req, res) => {
             })
             console.log(productPromise)
             res.render('ordersView', { data: productPromise, status: Number(req.params.id)})
-            // console.log(Number(req.params.id))
-            // res.send(productPromise)
+          
         }
         catch (error) {
             console.log(error)

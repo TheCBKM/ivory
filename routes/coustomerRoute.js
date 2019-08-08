@@ -34,7 +34,7 @@ app.post('/register', (req, res) => {
         console.log(req.body)
         coustomerPromise = await coustomerServices.saveCoustomer(req.body);
         req.session.cid = coustomerPromise._id
-        res.redirect('/order/shopshow')
+        res.redirect('/coustomer/login')
     })();
 
 })

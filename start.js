@@ -8,7 +8,7 @@ app.set('view engine', 'ejs');
 const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json())
-
+app.use('/static', express.static('uploads'))
 app.use(session({secret: 'rajaram1234',saveUninitialized: true,resave: true}));
 
 app.get('/setsession/:id',(req,res)=>{
@@ -27,7 +27,7 @@ app.get('/', function (req, res) {
 
 const mongoose = require('mongoose');
 function run() {
-    mongoose.connect('mongodb+srv://cbkm:rj2020m@shopping-c1evz.mongodb.net/ivory?retryWrites=true&w=majority', { useNewUrlParser: true });
+    mongoose.connect('mongodb+srv://cbkm:rj2020m@shopping-c1evz.mongodb.net/ivory1?retryWrites=true&w=majority', { useNewUrlParser: true });
     const db = mongoose.connection;
     db.on('error', console.error.bind(console, 'connection error:'));
     db.once('open', function () {

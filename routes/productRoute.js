@@ -3,9 +3,24 @@ const app = module.exports = require('express')();
 const productServices = require('../services/productServices');
 const subCategoryServices = require('../services/subCategoryServices');
 const categoryServices = require('../services/categoryServices');
-const {shopauth}= require('../middleware/auth')
+const { shopauth } = require('../middleware/auth')
+const multer = require('multer')
 
-app.get("/add",shopauth, (req, res) => {
+var storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, 'uploads')
+    },
+    filename: function (req, file, cb) {
+        f=file.originalname.split('.')
+        f=Date.now()+"."+f[f.length-1]
+      cb(null,f)
+      req.body.filename=f
+   console.log(f)
+      
+    }
+  })
+  var upload = multer({ storage: storage })
+app.get("/add", shopauth, (req, res) => {
     (async () => {
         try {
             params = {
@@ -20,18 +35,21 @@ app.get("/add",shopauth, (req, res) => {
 });
 
 
-app.post("/add",shopauth, (req, res) => {
+app.post("/add", upload.single('file'), shopauth, (req, res) => {
     (async () => {
         try {
+         console.log(req.body.filename)
             console.log(req.body)
             var subPromise = await subCategoryServices.getSubCategorybyId(req.body.subcategory);
             product = req.body;
+            product.img=req.body.filename
             console.log(subPromise)
 
             product.category = subPromise.category
             product.sid =req.session.sid
                 console.log(product)
             var savePromise = await productServices.saveProduct(product);
+
             res.redirect("/product/view")
         } catch (error) {
             console.log(error)
@@ -39,9 +57,14 @@ app.post("/add",shopauth, (req, res) => {
     })();
 });
 
-app.post("/update",shopauth, (req, res) => {
+
+
+
+app.post("/update", shopauth, (req, res) => {
     (async () => {
         try {
+
+           
             console.log(req.body)
             var savePromise = await productServices.updateProduct(req.body);
             res.redirect("/product/view")
@@ -51,7 +74,7 @@ app.post("/update",shopauth, (req, res) => {
     })();
 });
 
-app.get("/update/:id",shopauth, (req, res) => {
+app.get("/update/:id", shopauth, (req, res) => {
     (async () => {
         try {
             console.log(req.body)
@@ -63,7 +86,7 @@ app.get("/update/:id",shopauth, (req, res) => {
     })();
 });
 
-app.get("/view",shopauth, (req, res) => {
+app.get("/view", shopauth, (req, res) => {
     (async () => {
         try {
             params = {
@@ -80,7 +103,7 @@ app.get("/view",shopauth, (req, res) => {
 });
 
 
-app.get("/addhere/:id/:name/:var",shopauth, (req, res) => {
+app.get("/addhere/:id/:name/:var", shopauth, (req, res) => {
     (async () => {
         try {
             console.log(req.params);
@@ -94,7 +117,7 @@ app.get("/addhere/:id/:name/:var",shopauth, (req, res) => {
     })();
 });
 
-app.get("/delete/:id",shopauth, (req, res) => {
+app.get("/delete/:id", shopauth, (req, res) => {
     (async () => {
         try {
             console.log(req.params.id)
@@ -106,3 +129,4 @@ app.get("/delete/:id",shopauth, (req, res) => {
         }
     })();
 })
+

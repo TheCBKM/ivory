@@ -31,6 +31,9 @@ const productSchema=mongoose.Schema({
         type: Schema.Types.ObjectId,
         ref: 'shop',
         required: true
+    },
+    img:{
+        type:String
     }
 },{timestamps:true})
 
