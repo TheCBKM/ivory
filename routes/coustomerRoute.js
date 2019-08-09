@@ -5,6 +5,23 @@ const orderServices = require('../services/orderServices');
 const {coustomerauth}= require('../middleware/auth')
 
 
+const multer = require('multer')
+
+var storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, 'uploads')
+    },
+    filename: function (req, file, cb) {
+        f=file.originalname.split('.')
+        f=Date.now()+"."+f[f.length-1]
+      cb(null,f)
+      req.body.img=f
+   console.log(f)
+      
+    }
+  })
+  var upload = multer({ storage: storage })
+
 
 app.post("/login", (req, res) => {
     (async () => {
@@ -29,7 +46,7 @@ app.get('/login', (req, res) => {
     })();
 })
 
-app.post('/register', (req, res) => {
+app.post('/register',upload.single('file'), (req, res) => {
     (async () => {
         console.log(req.body)
         coustomerPromise = await coustomerServices.saveCoustomer(req.body);
@@ -60,6 +77,21 @@ app.get('/orders',coustomerauth, (req, res) => {
             console.log(productPromise)
             // res.send(productPromise)
             res.render('coustomerOrders', { data: productPromise,profile:req.session.coustomer })
+        }
+        catch (error) {
+            console.log(error)
+        }
+    })();
+})
+
+app.get('/getall', (req, res) => {
+    (async () => {
+        try {           
+            console.log("trans")
+            var productPromise = await coustomerServices.getCoustomers();
+            console.log(productPromise)
+            res.send(productPromise)
+            // res.render('coustomerOrders', { data: productPromise,profile:req.session.coustomer })
         }
         catch (error) {
             console.log(error)
