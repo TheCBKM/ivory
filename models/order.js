@@ -22,17 +22,17 @@ const orderSchema = mongoose.Schema({
         default: 0
         //0-active 1-sold 2-cancel
     },
-    sid:{
+    sid: {
         type: Schema.Types.ObjectId,
         ref: 'shop',
         required: true
     },
-    cid:{
+    cid: {
         type: Schema.Types.ObjectId,
         ref: 'coustomer',
         required: true
     },
 
-},{timestamps:true})
+}, { timestamps: true })
 
 module.exports = mongoose.model('order', orderSchema);
