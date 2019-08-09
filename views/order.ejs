@@ -15,11 +15,12 @@
         .card-body {
             /* height: 50px !important;
             margin-left: 2% !important; */
-            background-color: rgb(240, 148, 44);
+            background-color: rgb(255, 255, 255);
             padding: 0px !important;
             /* padding-top:5px !important; */
-
-
+        }
+        body{
+            background-color: rgb(255, 0, 0)
         }
     </style>
 </head>
@@ -40,7 +41,7 @@
 
                                 <img alt="<%=d.img%>" src="/static/<%=d.img%>" height="50px">
                             </div>
-                            <div class="col-4 " style="text-align: center">
+                            <div class="col-4 " style="text-align: center;color: rgb(224, 70, 32)">
                                 <b> <%= d.name%></b>
                                 <br>
                                 ₹<%= d.price%>/pc.
@@ -48,12 +49,12 @@
 
                             <div class="col-4 mx-auto">
                                 <button class="btn" onclick="minus('<%=d.id%>','<%=d.name%>','<%=d.price%>','<%=i%>','<%=d.available%>')">
-                                    <i class="fa fa-minus" aria-hidden="true"></i></button>
+                                    <i class="fa fa-minus"  style="color: red" aria-hidden="true"></i></button>
                                 <br>
                                 <input value="0" style="width: 30px; height: 20px" size="1" id="inp<%=i%>" />
                                 <br>
-                                <button onclick="plus('<%=d.id%>','<%=d.name%>','<%=d.price%>','<%=i%>','<%=d.available%>')" class="btn">
-                                    <i class="fa fa-plus" aria-hidden="true"></i></button>
+                                <button  onclick="plus('<%=d.id%>','<%=d.name%>','<%=d.price%>','<%=i%>','<%=d.available%>')" class="btn">
+                                        <i class="fa fa-plus" style="color: red" aria-hidden="true"></i></button>
                             </div>
                         </div>
                     </div>
@@ -87,7 +88,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Edit</button>
-                            <button type="button" onclick="order()" class="btn btn-primary">Finalize Order</button>
+                            <button type="button" onclick="order()" class="btn btn-danger">Finalize Order</button>
                         </div>
                         </dtiv>
                     </div>
@@ -247,6 +248,8 @@
                 }
                 axios.post('/order/trans', sendData).then(res => {
                     console.log(res)
+                    alert("order genrated")
+                    window.location.href='/order/shopshow'
                 })
             }
         }
