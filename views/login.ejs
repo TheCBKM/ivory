@@ -41,7 +41,12 @@
 		crossorigin="anonymous"></script>
 	<style type="text/css">
 		body {
-			color: rgb(251, 251, 251);
+			background: #FFEFBA;
+			/* fallback for old browsers */
+			background: -webkit-linear-gradient(to left, #FFFFFF, #FFEFBA);
+			/* Chrome 10-25, Safari 5.1-6 */
+			background: linear-gradient(to left, #FFFFFF, #FFEFBA);
+			/* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 			background: #ffffff;
 		}
 
@@ -137,7 +142,8 @@
 		.login-form form a:hover {
 			text-decoration: underline;
 		}
-		.product{
+
+		.product {
 			/* background-color: #fff; */
 			padding-bottom: 5px
 		}
