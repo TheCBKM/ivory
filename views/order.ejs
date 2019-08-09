@@ -15,16 +15,27 @@
         .card-body {
             /* height: 50px !important;
             margin-left: 2% !important; */
-            background: #2980B9;  /* fallback for old browsers */
-background: -webkit-linear-gradient(to right, #FFFFFF, #FFFFFF, #2980B9);  /* Chrome 10-25, Safari 5.1-6 */
-background: linear-gradient(to right, #FFFFFF, #FFFFFF, #2980B9); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+            background: rgb(255, 255, 255);
+            /* fallback for old browsers */
+            background: -webkit-linear-gradient(to right, #FFFFFF, #FFFFFF, rgb(255, 255, 255));
+            /* Chrome 10-25, Safari 5.1-6 */
+            background: linear-gradient(to right, #FFFFFF, #FFFFFF, rgb(255, 255, 255));
+            /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
             padding: 0px !important;
             /* padding-top:5px !important; */
         }
-        body{
-            background: #f12711;  /* fallback for old browsers */
-background: -webkit-linear-gradient(to right, #f5af19, #f12711);  /* Chrome 10-25, Safari 5.1-6 */
-background: linear-gradient(to right, #f5af19, #f12711); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+        .card{
+            padding: 0 0 0 !
+        }
+
+        body {
+            background: rgb(255, 255, 255);
+            /* fallback for old browsers */
+            background: -webkit-linear-gradient(to right, #FFFFFF, #FFFFFF, rgb(255, 255, 255));
+            /* Chrome 10-25, Safari 5.1-6 */
+            background: linear-gradient(to right, #FFFFFF, #FFFFFF, rgb(255, 255, 255));
+            /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
         }
     </style>
 </head>
@@ -42,29 +53,33 @@ background: linear-gradient(to right, #f5af19, #f12711); /* W3C, IE 10+/ Edge, F
                     <div class="card-body">
                         <div class="row">
                             <div class="col-4 mx-auto  ">
-<br>
+                                <br>
                                 <img alt="<%=d.img%>" src="/static/<%=d.img%>" height="50px">
                             </div>
                             <div class="col-4 " style="text-align: center;color: rgb(224, 70, 32)">
                                 <b> <%= d.name%></b>
                                 <br>
+                                <br>
                                 ₹<%= d.price%>/pc.
                             </div>
 
                             <div class="col-4 mx-auto">
-                                <button class="btn" onclick="minus('<%=d.id%>','<%=d.name%>','<%=d.price%>','<%=i%>','<%=d.available%>')">
-                                    <i class="fa fa-minus"  style="color: red" aria-hidden="true"></i></button>
+                                <button class="btn"
+                                    onclick="minus('<%=d.id%>','<%=d.name%>','<%=d.price%>','<%=i%>','<%=d.available%>')">
+                                    <i class="fa fa-minus" style="color: red" aria-hidden="true"></i></button>
                                 <br>
                                 <input value="0" style="width: 30px; height: 20px" size="1" id="inp<%=i%>" />
                                 <br>
-                                <button  onclick="plus('<%=d.id%>','<%=d.name%>','<%=d.price%>','<%=i%>','<%=d.available%>')" class="btn">
-                                        <i class="fa fa-plus" style="color: red" aria-hidden="true"></i></button>
+                                <button
+                                    onclick="plus('<%=d.id%>','<%=d.name%>','<%=d.price%>','<%=i%>','<%=d.available%>')"
+                                    class="btn">
+                                    <i class="fa fa-plus" style="color: red" aria-hidden="true"></i></button>
                             </div>
                         </div>
                     </div>
 
                 </div>
-                <br>
+               
                 <% })%>
             </div>
         </div>
@@ -115,7 +130,7 @@ background: linear-gradient(to right, #f5af19, #f12711); /* W3C, IE 10+/ Edge, F
                 console.log(p)
                 if (p != -1) {
                     arr[p].quantity = document.getElementById(`inp${id}`).value
-                    arr[p].available+=document.getElementById(`inp${id}`).value
+                    arr[p].available += document.getElementById(`inp${id}`).value
 
                 }
                 else {
@@ -124,8 +139,8 @@ background: linear-gradient(to right, #f5af19, #f12711); /* W3C, IE 10+/ Edge, F
                         quantity: document.getElementById(`inp${id}`).value,
                         price: price,
                         name: name,
-                        available:available-1,
-                        pava:available
+                        available: available - 1,
+                        pava: available
                     })
                 }
 
@@ -146,10 +161,10 @@ background: linear-gradient(to right, #f5af19, #f12711); /* W3C, IE 10+/ Edge, F
             console.log(p)
             if (p != -1) {
                 if (arr[p].available - document.getElementById(`inp${id}`).value < 0) {
-                    
+
                     alert("can not add more")
                     --document.getElementById(`inp${id}`).value
-                    arr[p].available-=document.getElementById(`inp${id}`).value
+                    arr[p].available -= document.getElementById(`inp${id}`).value
 
 
                 }
@@ -167,8 +182,8 @@ background: linear-gradient(to right, #f5af19, #f12711); /* W3C, IE 10+/ Edge, F
                     quantity: document.getElementById(`inp${id}`).value,
                     price: price,
                     name: name,
-                    available:Number(available-1),
-                    pava:available
+                    available: Number(available - 1),
+                    pava: available
                 })
             }
 
@@ -178,13 +193,13 @@ background: linear-gradient(to right, #f5af19, #f12711); /* W3C, IE 10+/ Edge, F
             tprice = 0
             for (i = 0; i < arr.length; i++) {
                 if (arr[i].quantity == 0) {
-                    
+
                     arr.splice(i, 1)
                 }
-                if(arr[i].available<0){
-                        alert(`cannot add ${arr[i].name} please use less value`)
-                        arr.splice(i, 1)
-                    }
+                if (arr[i].available < 0) {
+                    alert(`cannot add ${arr[i].name} please use less value`)
+                    arr.splice(i, 1)
+                }
             }
             for (i = 0; i < arr.length; i++) {
                 tprice += arr[i].quantity * arr[i].price
@@ -253,7 +268,7 @@ background: linear-gradient(to right, #f5af19, #f12711); /* W3C, IE 10+/ Edge, F
                 axios.post('/order/trans', sendData).then(res => {
                     console.log(res)
                     alert("order genrated")
-                    window.location.href='/order/shopshow'
+                    window.location.href = '/order/shopshow'
                 })
             }
         }
