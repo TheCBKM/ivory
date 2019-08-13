@@ -16,8 +16,8 @@ app.post("/login", (req, res) => {
                 res.redirect('/inventory/view')
             }
             else
-                res.send('<h1>You are not Register here <br> Call 9340573858</h1>')
-            // res.render('register', { number: req.params.number, data: 1 })
+                // res.send('<h1>You are not Register here <br> Call 9340573858</h1>')
+            res.render('register', { number: req.params.number, data: 1 })
         } catch (error) {
             console.log(error)
         }
