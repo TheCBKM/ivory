@@ -13,11 +13,11 @@ app.post("/login", (req, res) => {
             coustomerPromise = await shopServices.getShopbyNumber(Number(req.body.phone));
             if (coustomerPromise) {
                 req.session.sid = coustomerPromise._id
-                res.redirect('/order/trans/0')
+                res.redirect('/inventory/view')
             }
             else
-            res.send('<h1>You are not Register here <br> Call 9340573858</h1>')
-                // res.render('register', { number: req.params.number, data: 1 })
+                res.send('<h1>You are not Register here <br> Call 9340573858</h1>')
+            // res.render('register', { number: req.params.number, data: 1 })
         } catch (error) {
             console.log(error)
         }
@@ -74,7 +74,7 @@ app.post('/register', upload.single('file'), (req, res) => {
 
 app.get('/getall', (req, res) => {
     (async () => {
-        try {           
+        try {
             console.log("trans")
             var productPromise = await shopServices.getShops();
             console.log(productPromise)
