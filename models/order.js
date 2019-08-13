@@ -32,6 +32,10 @@ const orderSchema = mongoose.Schema({
         ref: 'coustomer',
         required: true
     },
+    oid:{
+        type:String,
+        required: true
+    }
 
 }, { timestamps: true })
 

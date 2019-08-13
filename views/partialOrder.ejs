@@ -42,7 +42,6 @@
 </head>
 
 <body>
-    <% include  partials/coustomerNav%>
     <center>
         <div class="row">
             <div class="col col-md-12 mx-auto ">
@@ -55,24 +54,29 @@
                         <div class="row">
                             <div class="col-4 mx-auto  ">
                                 <br>
-                                <img alt="<%=d.img%>" src="/static/<%=d.img%>" height="50px">
+                                <img alt="<%=d.img%>" src="/static/<%=d.product.img%>" height="50px">
                             </div>
                             <div class="col-4 " style="text-align: center;color: rgb(224, 70, 32)">
-                                <b><div style="font-size: 15px"> <%= d.name%></div></b>
+                                <b><div style="font-size: 15px"> <%= d.product.name%></div></b>
                                 <br>
                                 <br>
-                                ₹<%= d.price%>/pc.
+                                ₹<%= d.product.price%>/pc.
                             </div>
 
                             <div class="col-4 mx-auto">
                                 <button class="btn"
-                                    onclick="minus('<%=d.id%>','<%=d.name%>','<%=d.price%>','<%=i%>','<%=d.available%>')">
+                                    onclick="minus('<%=d.product.id%>','<%=d.product.name%>','<%=d.product.price%>','<%=i%>','<%=d.product.available%>')">
                                     <i class="fa fa-minus" style="color: red" aria-hidden="true"></i></button>
                                 <br>
-                                <input value="0" style="width: 15px; height: 20px" size="1" id="inp<%=i%>" />
-                                <br>
+                                <input value="<%=d.quantity%>" style="width: 15px; height: 20px" size="1" id="inp<%=i%>" />
                                 <button
-                                    onclick="plus('<%=d.id%>','<%=d.name%>','<%=d.price%>','<%=i%>','<%=d.available%>')"
+                                onclick="ok('<%=d.product.id%>','<%=d.product.name%>','<%=d.product.price%>','<%=i%>','<%=d.product.available%>')"
+                                class="btn">
+                                <i class="fa fa-check" style="color: green" aria-hidden="true"></i></button>
+                                <br>
+
+                                <button
+                                    onclick="plus('<%=d.product.id%>','<%=d.product.name%>','<%=d.product.price%>','<%=i%>','<%=d.product.available%>')"
                                     class="btn">
                                     <i class="fa fa-plus" style="color: red" aria-hidden="true"></i></button>
                             </div>
@@ -129,7 +133,7 @@
                 console.log(p)
                 if (p != -1) {
                     arr[p].quantity = document.getElementById(`inp${id}`).value
-                    arr[p].available =arr[p].pava- document.getElementById(`inp${id}`).value
+                    arr[p].available += document.getElementById(`inp${id}`).value
 
                 }
                 else {
@@ -143,6 +147,51 @@
                     })
                 }
 
+            }
+
+        }
+
+
+        function ok(pid, name, price, id, available) {
+            document.getElementById(`inp${id}`).value
+
+            p = -1
+
+            for (i = 0; i < arr.length; i++) {
+                if (arr[i].product == pid) {
+                    p = i
+
+                }
+            }
+            console.log(p)
+            if (p != -1) {
+                if (arr[p].available - document.getElementById(`inp${id}`).value < 0) {
+
+                    alert("can not add more")
+                    // document.getElementById(`inp${id}`).value
+                    arr[p].available = document.getElementById(`inp${id}`).value
+
+
+                }
+                else {
+                    // ++document.getElementById(`inp${id}`).value
+
+                    arr[p].quantity = document.getElementById(`inp${id}`).value
+                    arr[p].available -= document.getElementById(`inp${id}`).value
+
+                    // alert("can  add more")
+
+                }
+            }
+            else {
+                arr.push({
+                    product: pid,
+                    quantity: document.getElementById(`inp${id}`).value,
+                    price: price,
+                    name: name,
+                    available: Number(available - 1),
+                    pava: available
+                })
             }
 
         }
@@ -171,7 +220,7 @@
                     // ++document.getElementById(`inp${id}`).value
 
                     arr[p].quantity = document.getElementById(`inp${id}`).value
-                    arr[p].available =arr[p].pava- document.getElementById(`inp${id}`).value
+                    arr[p].available -= document.getElementById(`inp${id}`).value
 
                     // alert("can  add more")
 
@@ -264,12 +313,14 @@
             else {
                 sendData = {
                     products: arr,
-                    price: tprice
+                    price: tprice,
+                    ooid:`${window.location.href.split('/')[window.location.href.split('/').length-1]}`
                 }
-                axios.post('/order/trans', sendData).then(res => {
+                console.log(sendData)
+                axios.post(`/order/trans/partial`, sendData).then(res => {
                     console.log(res)
-                    alert("order genrated")
-                    window.location.href = '/order/shopshow'
+                    alert("order Updated")
+                    window.location.href = '/order/trans/0'
                 })
             }
         }

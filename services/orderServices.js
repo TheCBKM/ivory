@@ -7,7 +7,7 @@ const getOrder = function (params) {
     // sort({'createdAt':-1}).skip(parseResult.skip).limit(parseResult.limit).populate('category', 'name').populate('subcategory','name').populate('company'
 }   
 const getOrderbyId = function (params) {
-    return orderSchema.findOne({ "_id": params }).exec();
+    return orderSchema.findOne({ "_id": params }).sort({createdAt:-1}).populate('products.product').exec();
 }
 const getOrderbyCoustomer = function (params) {
     return orderSchema.find({ cid: mongoose.Types.ObjectId(params.toString()) }).sort({createdAt:-1}).populate('products.product').populate('sid').exec();

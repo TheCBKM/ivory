@@ -1,4 +1,6 @@
 const app = module.exports = require('express')();
+var uniqid = require('uniqid');
+
 
 const productServices = require('../services/productServices');
 const subCategoryServices = require('../services/subCategoryServices');
@@ -9,21 +11,21 @@ const transactionServices = require('../services/transactionServices');
 const shopServices = require('../services/shopServices');
 const coustomerServices = require('../services/coustomerServices');
 
-const {shopauth,coustomerauth}= require('../middleware/auth')
+const { shopauth, coustomerauth } = require('../middleware/auth')
 
 
-app.get('/make/:id',coustomerauth, (req, res) => {
+app.get('/make/:id', coustomerauth, (req, res) => {
     (async () => {
         try {
             params = {
                 sid: req.params.id
             }
-            req.session.sid=req.params.id
+            req.session.sid = req.params.id
             console.log(params.sid)
             var productPromise = await productServices.getProduct(params);
             console.log(productPromise)
-             coustomer=await coustomerServices.getCoustomerbyId(req.session.cid)
-            res.render('order', { data: productPromise,profile:coustomer })
+            coustomer = await coustomerServices.getCoustomerbyId(req.session.cid)
+            res.render('order', { data: productPromise, profile: coustomer })
         }
         catch (error) {
             console.log(error)
@@ -31,7 +33,7 @@ app.get('/make/:id',coustomerauth, (req, res) => {
     })();
 })
 
-app.post('/trans',coustomerauth, (req, res) => {
+app.post('/trans', coustomerauth, (req, res) => {
     (async () => {
         try {
             console.log("----------")
@@ -47,8 +49,9 @@ app.post('/trans',coustomerauth, (req, res) => {
                 })();
             })
             save = req.body
+            save.oid = uniqid.time()
             save.sid = req.session.sid
-            save.cid=req.session.cid
+            save.cid = req.session.cid
             console.log(save.products)
             var productPromise = await orderServices.saveOrder(save);
             res.send({ data: productPromise, success: true })
@@ -58,7 +61,34 @@ app.post('/trans',coustomerauth, (req, res) => {
         }
     })();
 })
-app.get('/view',shopauth, (req, res) => {
+
+app.post('/trans/partial', shopauth, (req, res) => {
+    (async () => {
+        try {
+            console.log("----------")
+
+            console.log(req.body)
+            req.body.products.map(p => {
+                (async () => {
+                    pro = {
+                        id: p.product,
+                        available: p.available
+                    }
+                    var productPromise = await productServices.updateProduct(pro);
+                })();
+            })
+            save = req.body
+            save.id = req.body.ooid
+            console.log(save.products)
+            var productPromise = await orderServices.updateOrder(save);
+            res.send({ data: productPromise, success: true })
+        }
+        catch (error) {
+            console.log(error)
+        }
+    })();
+})
+app.get('/view', shopauth, (req, res) => {
     (async () => {
         try {
             params = {
@@ -74,7 +104,7 @@ app.get('/view',shopauth, (req, res) => {
         }
     })();
 })
-app.get('/trans/:id',shopauth, (req, res) => {
+app.get('/trans/:id', shopauth, (req, res) => {
     (async () => {
         try {
             params = {
@@ -85,16 +115,29 @@ app.get('/trans/:id',shopauth, (req, res) => {
                 return p.status == Number(req.params.id)
             })
             console.log(productPromise)
-            res.render('ordersView', { data: productPromise, status: Number(req.params.id)})
-          
+            res.render('ordersView', { data: productPromise, status: Number(req.params.id) })
+
         }
         catch (error) {
             console.log(error)
         }
     })();
 })
-
-app.get('/sold/:id',shopauth, (req, res) => {
+app.get('/makePartial/:id', shopauth, (req, res) => {
+    (async () => {
+        try {
+            console.log(req.params.id)
+            coustomer = await orderServices.getOrderbyId(req.params.id)
+            console.log(coustomer)
+            // res.send(coustomer)
+            res.render('partialOrder', { data: coustomer.products, profile: coustomer })
+        }
+        catch (error) {
+            console.log(error)
+        }
+    })();
+})
+app.get('/sold/:id', shopauth, (req, res) => {
     (async () => {
         try {
             order = {
@@ -122,7 +165,7 @@ app.get('/sold/:id',shopauth, (req, res) => {
     })();
 })
 
-app.get('/cancel/:id',shopauth, (req, res) => {
+app.get('/cancel/:id', shopauth, (req, res) => {
     (async () => {
         try {
             var productPromise = await orderServices.getOrderbyId(req.params.id);
@@ -142,14 +185,16 @@ app.get('/cancel/:id',shopauth, (req, res) => {
                     var productPromise = await productServices.updateProduct(pro);
                 })();
 
-
             })
             order = {
                 id: req.params.id,
                 status: 2
             }
             var productPromise = await orderServices.updateOrder(order);
-            res.send({ data: productPromise, success: true })
+            res.redirect('/order/trans/0')
+
+            // res.send({ data: productPromise, success: true })
+
         }
         catch (error) {
             console.log(error)
@@ -157,7 +202,7 @@ app.get('/cancel/:id',shopauth, (req, res) => {
     })();
 })
 
-app.get('/trans/delete/:id',shopauth, (req, res) => {
+app.get('/trans/delete/:id', shopauth, (req, res) => {
     (async () => {
         try {
             var productPromise = await orderServices.deleteOrderById(req.params.id);
@@ -170,12 +215,12 @@ app.get('/trans/delete/:id',shopauth, (req, res) => {
 })
 
 
-app.get('/shopshow',coustomerauth, (req, res) => {
+app.get('/shopshow', coustomerauth, (req, res) => {
     (async () => {
         try {
             shopPromise = await shopServices.getShops()
 
-            res.render('showshop',{data:shopPromise,profile:req.session.coustomer})
+            res.render('showshop', { data: shopPromise, profile: req.session.coustomer })
         }
         catch (error) {
             console.log(error)

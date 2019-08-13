@@ -30,10 +30,14 @@
             <%data.map((d,i)=>{%>
             <tr>
                 <th scope="row"><%=i+1%></th>
-                <td><%=d._id%></td>
+                <!-- <td><%=d._id%></td> -->
+                <td><%=d.oid%></td>
+
                 <td><%=d.price%></td>
                 <td><%=d.createdAt%></td>
                 <td><a href="/order/trans/delete/<%=d._id%>">delete</a></td>
+                <td><a href="/order/cancel/<%=d._id%>">cancel</a></td>
+
                 <td>
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#A<%=d._id%>">
                         View
@@ -92,7 +96,8 @@
 
                 <td> <button type="button" onclick="diliver('<%=d._id%>')" class="btn btn-secondary">Delivered</button>
                 </td>
-                
+                <td> <a href="/order/makePartial/<%=d._id%>" class="btn btn-secondary">Partial Delivered</button>
+                </td>
                 <td> <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#C<%=d._id%>">
                         Call
                     </button>
