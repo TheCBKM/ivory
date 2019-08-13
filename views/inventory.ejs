@@ -54,32 +54,90 @@
 
 <body>
   <% include  partials/navbar%>
+  <div class="row">
+    <div class="col col-md-6">
 
-  <div class="view">
-    <h1>Your Inventory</h1>
+      <h1>Your Inventory</h1>
 
-    <ul class="category-ul">
-      <%categories.map(c=>{%>
-      <li class="category-li"> <%=c.name%>
-      </li>
-      <ul class=subcategory-ul ">
-                <%subCategories.map(sc=>{%>
-                <%if(sc.category.toString()==c._id.toString()){%>
-                <li class=subcategory-li><%=sc.name%>
-                </li>
-                <ul class=" product-ul">
-        <%products.map(p=>{%>
-        <%if(p.subcategory.toString()==sc._id.toString()){%>
-        <li class="product-li"><%=p.name%> -- <%=p.available%> <a href="/inventory/add/<%=p.id%>"> <i
-              class="fa fa-refresh" aria-hidden="true"></i></a>
-          <% }})%>
+      <ul class="category-ul">
+        <%categories.map(c=>{%>
+        <li class="category-li"> <%=c.name%>
+        </li>
+        <ul class=subcategory-ul ">
+                  <%subCategories.map(sc=>{%>
+                  <%if(sc.category.toString()==c._id.toString()){%>
+                  <li class=subcategory-li><%=sc.name%>
+                  </li>
+                  <ul class=" product-ul">
+          <%products.map(p=>{%>
+          <%if(p.subcategory.toString()==sc._id.toString()){%>
+          <li class="product-li"><%=p.name%> -- <%=p.available%> <a href="/inventory/add/<%=p.id%>"> <i
+                class="fa fa-refresh" aria-hidden="true"></i></a>
+            <% }})%>
+        </ul>
+        <% }})%>
+
       </ul>
-      <% }})%>
+      <% })%>
+      </ul>
+    </div>
+    <div class="col col-md-6">
+      <div class="row">
+        <div class="col col-md-6">
+          <div class="card  ml-auto" style="width: 18rem;">
+            <div class="card-body">
+              <h5 class="card-title">Daily</h5>
+              <p class="card-text">
+                <ul class="list-group">
+                  <li class="list-group-item">Total Product :-<%=products.length%> </li>
+                  <li class="list-group-item">Total Orders :-<%=order.length%></li>
 
-    </ul>
-    <% })%>
-    </ul>
+                </ul>
+              </p>
+            </div>
+            <div class="card-body">
+              <h5 class="card-title">Weekly</h5>
+              <p class="card-text">
+                <ul class="list-group">
+                  <li class="list-group-item">Total Product :-<%=products.length%> </li>
+                  <li class="list-group-item">Total Orders :-<%=order.length%></li>
+
+                </ul>
+              </p>
+            </div>
+            <div class="card-body">
+              <h5 class="card-title">Monthly</h5>
+              <p class="card-text">
+                <ul class="list-group">
+                  <li class="list-group-item">Total Product :-<%=products.length%> </li>
+                  <li class="list-group-item">Total Orders :-<%=order.length%></li>
+
+                </ul>
+              </p>
+            </div>
+
+          </div>
+        </div>
+        <div class="col col-md-6">
+          <div class="card  ml-auto" style="width: 100%;">
+            <img class="img-top" width="200px" height="200px" src="/static/<%=shop.img%>" alt="Card image cap">
+            <div class="card-body">
+              <h5 class="card-title"><%=shop.name%></h5>
+              <p class="card-text">
+                <ul class="list-group">
+                  <li class="list-group-item">Total Product :-<%=products.length%> </li>
+                  <li class="list-group-item">Total Orders :-<%=order.length%></li>
+
+                </ul>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
+
+
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
     integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
     crossorigin="anonymous"></script>

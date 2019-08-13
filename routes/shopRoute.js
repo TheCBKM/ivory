@@ -13,7 +13,7 @@ app.post("/login", (req, res) => {
             coustomerPromise = await shopServices.getShopbyNumber(Number(req.body.phone));
             if (coustomerPromise) {
                 req.session.sid = coustomerPromise._id
-                res.redirect('/product/view')
+                res.redirect('/order/trans/0')
             }
             else
                 res.render('register', { number: req.params.number, data: 1 })

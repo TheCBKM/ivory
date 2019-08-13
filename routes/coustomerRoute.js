@@ -4,7 +4,9 @@ const coustomerServices = require('../services/coustomerServices');
 const orderServices = require('../services/orderServices');
 const {coustomerauth}= require('../middleware/auth')
 
-
+const imagemin = require('imagemin');
+const imageminJpegtran = require('imagemin-jpegtran');
+// const imageminPngquant = require('imagemin-pngquant');
 const multer = require('multer')
 
 var storage = multer.diskStorage({
@@ -51,6 +53,14 @@ app.post('/register',upload.single('file'), (req, res) => {
         console.log(req.body)
         coustomerPromise = await coustomerServices.saveCoustomer(req.body);
         req.session.cid = coustomerPromise._id
+        const files = await imagemin([`uploads/${req.body.f}`], {
+            destination: 'uploads',
+            plugins: [
+                imageminJpegtran(),
+            ]
+        });
+     
+        console.log(files);
         res.redirect('/coustomer/login')
     })();
 

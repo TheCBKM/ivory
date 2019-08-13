@@ -34,7 +34,7 @@
                 <td><%=d.oid%></td>
 
                 <td><%=d.price%></td>
-                <td><%=d.createdAt%></td>
+                <td><script>document.write(`<%=d.createdAt%>`.split('G')[0])</script></td>
                 <td><a href="/order/trans/delete/<%=d._id%>">delete</a></td>
                 <td><a href="/order/cancel/<%=d._id%>">cancel</a></td>
 
