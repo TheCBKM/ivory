@@ -1,90 +1,94 @@
 <html>
 
 <head>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css"
-        href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
-    <style>
-          a {
-            text-decoration: none;
-            text-decoration-color: none
-        }
-       .view{
-          margin-left: 30%;
-          width:30%
-       }
-       
-       .category-ul{
-         color:blue 
-       }
-       .category-li{
-         color:rgb(77, 6, 245) ;
-         background-color: rgb(51, 182, 223)
-       }
-       .subcategory-li{
-         color:red ;
-         background-color: rgb(167, 206, 27)
-       }
-       .product-li::before{
-         color:green ;
-         content: '\25BA';
-       }
-       .product-li{
-         color:rgb(218, 30, 192) ;
-         background-color: rgb(245, 167, 23)
-       }
-       .subcategory-li::before{
-         color:green ;
-         content: '\27A4';
-       }
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css"
+    href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+  <style>
+    a {
+      text-decoration: none;
+      text-decoration-color: none
+    }
 
-       .category-li::before{
-         color:green ;
-         content: '\276D';
-       }
-        
+    .view {
+      margin-left: 30%;
+      width: 30%
+    }
 
-    </style>
+    .category-ul {
+      color: blue
+    }
+
+    .category-li {
+      color: rgb(77, 6, 245);
+      background-color: rgb(51, 182, 223)
+    }
+
+    .subcategory-li {
+      color: red;
+      background-color: rgb(167, 206, 27)
+    }
+
+    .product-li::before {
+      color: green;
+      content: '\25BA';
+    }
+
+    .product-li {
+      color: rgb(218, 30, 192);
+      background-color: rgb(245, 167, 23)
+    }
+
+    .subcategory-li::before {
+      color: green;
+      content: '\27A4';
+    }
+
+    .category-li::before {
+      color: green;
+      content: '\276D';
+    }
+  </style>
 </head>
 
 <body>
-        <% include  partials/navbar%>
+  <% include  partials/navbar%>
 
-    <div class="view">
-            <h1>Your Inventory</h1>
+  <div class="view">
+    <h1>Your Inventory</h1>
 
-        <ul class="category-ul" >
-            <%categories.map(c=>{%>
-            <li class="category-li"> <%=c.name%>
-            </li>
-            <ul class=subcategory-ul ">
+    <ul class="category-ul">
+      <%categories.map(c=>{%>
+      <li class="category-li"> <%=c.name%>
+      </li>
+      <ul class=subcategory-ul ">
                 <%subCategories.map(sc=>{%>
                 <%if(sc.category.toString()==c._id.toString()){%>
                 <li class=subcategory-li><%=sc.name%>
                 </li>
-                <ul class="product-ul">
-                    <%products.map(p=>{%>
-                    <%if(p.subcategory.toString()==sc._id.toString()){%>
-                    <li class="product-li"><%=p.name%> -- <%=p.available%> <a href="/inventory/add/<%=p.id%>"> <i class="fa fa-refresh"
-                                aria-hidden="true"></i></a>
-                        <% }})%>
-                </ul>
-                <% }})%>
-         
-            </ul>
-            <% })%>
-        </ul>
-    </div>
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-        crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-        crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-        crossorigin="anonymous"></script>
+                <ul class=" product-ul">
+        <%products.map(p=>{%>
+        <%if(p.subcategory.toString()==sc._id.toString()){%>
+        <li class="product-li"><%=p.name%> -- <%=p.available%> <a href="/inventory/add/<%=p.id%>"> <i
+              class="fa fa-refresh" aria-hidden="true"></i></a>
+          <% }})%>
+      </ul>
+      <% }})%>
+
+    </ul>
+    <% })%>
+    </ul>
+  </div>
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
 </body>
 
 </html>

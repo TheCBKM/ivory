@@ -10,7 +10,7 @@ const getOrderbyId = function (params) {
     return orderSchema.findOne({ "_id": params }).exec();
 }
 const getOrderbyCoustomer = function (params) {
-    return orderSchema.find({ cid: mongoose.Types.ObjectId(params.toString()) }).populate('products.product').populate('sid').exec();
+    return orderSchema.find({ cid: mongoose.Types.ObjectId(params.toString()) }).sort({createdAt:-1}).populate('products.product').populate('sid').exec();
 }
 const saveOrder = function (productObj) {
     let prod = new orderSchema(productObj);

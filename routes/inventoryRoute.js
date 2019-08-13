@@ -5,7 +5,6 @@ const subCategoryServices = require('../services/subCategoryServices');
 const categoryServices = require('../services/categoryServices');
 const {shopauth}= require('../middleware/auth')
 
-
 app.get("/view",shopauth, (req, res) => {
     (async () => {
         try {
