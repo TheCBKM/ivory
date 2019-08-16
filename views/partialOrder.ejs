@@ -49,9 +49,9 @@
 
 
 
-                <div class="card" style="width: 18rem;">
-                    <div class="card-body">
-                        <div class="row">
+                <div class="card"  style="width: 18rem;">
+                    <div class="card-body" >
+                        <div class="row" id="row<%=i%>">
                             <div class="col-4 mx-auto  ">
                                 <br>
                                 <img alt="<%=d.img%>" src="/static/<%=d.product.img%>" height="50px">
@@ -68,7 +68,7 @@
                                     onclick="minus('<%=d.product.id%>','<%=d.product.name%>','<%=d.product.price%>','<%=i%>','<%=d.product.available%>')">
                                     <i class="fa fa-minus" style="color: red" aria-hidden="true"></i></button>
                                 <br>
-                                <input value="<%=d.quantity%>" style="width: 15px; height: 20px" size="1" id="inp<%=i%>" />
+                                <input value="<%=d.quantity%>" style="width: 25px; height: 20px" size="1" id="inp<%=i%>" />
                                 <button
                                 onclick="ok('<%=d.product.id%>','<%=d.product.name%>','<%=d.product.price%>','<%=i%>','<%=d.product.available%>')"
                                 class="btn">
@@ -153,6 +153,7 @@
 
 
         function ok(pid, name, price, id, available) {
+            document.getElementById(`row${id}`).style.backgroundColor='green'
 
             p = -1
 

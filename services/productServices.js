@@ -2,7 +2,7 @@ const productSchema = require('../models/product');
 const mongoose = require('mongoose');
 
 const getProduct = function (params) {
-    // console.log(params.user._id.toString())
+    console.log((params.sid.toString()))
     return productSchema.find({ sid: mongoose.Types.ObjectId(params.sid.toString()) }).sort({ createdAt: -1 }).exec();
     // sort({'createdAt':-1}).skip(parseResult.skip).limit(parseResult.limit).populate('category', 'name').populate('subcategory','name').populate('company'
 }

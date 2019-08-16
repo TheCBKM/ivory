@@ -8,5 +8,6 @@ app.use('/inventory', require('./inventoryRoute'));
 app.use('/order', require('./orderRoute'));
 app.use('/coustomer', require('./coustomerRoute'));
 app.use('/shop', require('./shopRoute'));
+app.use('/admin', require('./adminRoute'));
 
 
