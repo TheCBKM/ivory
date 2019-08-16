@@ -10,6 +10,7 @@
 
 <body>
 </body>
+
 </html>
 <!DOCTYPE html>
 <html lang="en">
@@ -41,7 +42,7 @@
 			/* Chrome 10-25, Safari 5.1-6 */
 			background: linear-gradient(to left, #FFFFFF, #FFEFBA);
 			/* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-				background: #ffffff;
+			background: #ffffff;
 		}
 
 		.form-control {
@@ -153,58 +154,67 @@
 		<form action="/shop/login" method="post">
 			<%} else if(data==0){%>
 			<form action="/coustomer/login" method="post">
-				<%}%>
-		<div class="avatar">
-			<img src="/static/Yantranant LOGO-01.png" alt="Avatar">
-		</div>
-        <h2 class="text-center">Member Login</h2>   
-        <div class="form-group">
-        	<input type="number" class="form-control" name="phone" placeholder="Number" required="required">
-        </div>
-		<!-- <div class="form-group">
+				<%}else if(data==2){%>
+				<form action="/admin/login" method="post">
+					<%}%>%>
+					<div class="avatar">
+						<img src="/static/Yantranant LOGO-01.png" alt="Avatar">
+					</div>
+					<h2 class="text-center">Member Login</h2>
+					<div class="form-group">
+						<input type="number" class="form-control" name="phone" placeholder="Number" required="required">
+					</div>
+					<%if(data==2){%>
+					<div class="form-group">
+						<input type="text" class="form-control" name="pass" placeholder="password" required="required">
+					</div>
+					<%}%>
+					<!-- <div class="form-group">
             <input type="password" class="form-control" name="password" placeholder="Password" required="required">
         </div>         -->
-        <div class="form-group">
-            <button type="submit" class="btn btn-primary btn-lg btn-block">Sign in</button>
-        </div>
-		<div class="clearfix">
-            <label class="pull-left checkbox-inline"><input type="checkbox"> Remember me</label>
-            <a href="#" class="pull-right">Forgot Password?</a>
-        </div>
-	</form>
-	<div class="row">
-		<div class="col col-sm-4">
-		<img src="/static/s1.jpeg" width="50px"  height="60px">
-		</div>
-		<div class="col col-sm-4">
-		<img src="/static/s2.jpeg"  height="60px" width="50px">
-		</div>
-		<div class="col col-sm-4">
-<img src="/static/s3.jpeg"  height="60px" width="50px">
-</div>
-<div class="col product col-sm-4">
-	<img src="/static/coca.jpeg"  height="60px" width="50px">
-	</div>
-<div class="col product col-sm-4 my-auto">
-		<img src="/static/s4.jpeg"   height="60px" width="50px">
-		</div>
-		<div class="col product col-sm-4">
-			<img src="/static/fanta.png"  height="60px" width="50px">
-			</div>
-		<div class="col product col-sm-4">
-				<img src="/static/s5.jpeg"  height="60px" width="50px">
-				</div>
-				<div class="col product col-sm-4">
-					<img src="/static/amul.jpeg"  height="60px" width="50px">
+					<div class="form-group">
+						<button type="submit" class="btn btn-primary btn-lg btn-block">Sign in</button>
+					</div>
+
+					<div class="clearfix">
+						<label class="pull-left checkbox-inline"><input type="checkbox"> Remember me</label>
+						<a href="#" class="pull-right">Forgot Password?</a>
+					</div>
+				</form>
+				<div class="row">
+					<div class="col col-sm-4">
+						<img src="/static/s1.jpeg" width="50px" height="60px">
+					</div>
+					<div class="col col-sm-4">
+						<img src="/static/s2.jpeg" height="60px" width="50px">
+					</div>
+					<div class="col col-sm-4">
+						<img src="/static/s3.jpeg" height="60px" width="50px">
 					</div>
 					<div class="col product col-sm-4">
-						<img src="/static/her.jpeg"  height="60px" width="50px">
-						</div>
-					
-				
-		
+						<img src="/static/coca.jpeg" height="60px" width="50px">
+					</div>
+					<div class="col product col-sm-4 my-auto">
+						<img src="/static/s4.jpeg" height="60px" width="50px">
+					</div>
+					<div class="col product col-sm-4">
+						<img src="/static/fanta.png" height="60px" width="50px">
+					</div>
+					<div class="col product col-sm-4">
+						<img src="/static/s5.jpeg" height="60px" width="50px">
+					</div>
+					<div class="col product col-sm-4">
+						<img src="/static/amul.jpeg" height="60px" width="50px">
+					</div>
+					<div class="col product col-sm-4">
+						<img src="/static/her.jpeg" height="60px" width="50px">
+					</div>
+
+
+
+				</div>
+				<!-- <p class="text-center small">Don't have an account? <a href="#">Sign up here!</a></p> -->
 	</div>
-    <!-- <p class="text-center small">Don't have an account? <a href="#">Sign up here!</a></p> -->
-</div>
 </body>
-</html>                            
+
+</html>

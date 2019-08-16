@@ -2,7 +2,7 @@ const app = module.exports = require('express')();
 
 const coustomerServices = require('../services/coustomerServices');
 const orderServices = require('../services/orderServices');
-const {coustomerauth}= require('../middleware/auth')
+const { coustomerauth } = require('../middleware/auth')
 
 const imagemin = require('imagemin');
 const imageminJpegtran = require('imagemin-jpegtran');
@@ -11,18 +11,18 @@ const multer = require('multer')
 
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {
-      cb(null, 'uploads')
+        cb(null, 'uploads')
     },
     filename: function (req, file, cb) {
-        f=file.originalname.split('.')
-        f=Date.now()+"."+f[f.length-1]
-      cb(null,f)
-      req.body.img=f
-   console.log(f)
-      
+        f = file.originalname.split('.')
+        f = Date.now() + "." + f[f.length - 1]
+        cb(null, f)
+        req.body.img = f
+        console.log(f)
+
     }
-  })
-  var upload = multer({ storage: storage })
+})
+var upload = multer({ storage: storage })
 
 
 app.post("/login", (req, res) => {
@@ -48,7 +48,7 @@ app.get('/login', (req, res) => {
     })();
 })
 
-app.post('/register',upload.single('file'), (req, res) => {
+app.post('/register', upload.single('file'), (req, res) => {
     (async () => {
         console.log(req.body)
         coustomerPromise = await coustomerServices.saveCoustomer(req.body);
@@ -59,7 +59,7 @@ app.post('/register',upload.single('file'), (req, res) => {
                 imageminJpegtran(),
             ]
         });
-     
+
         console.log(files);
         res.redirect('/coustomer/login')
     })();
@@ -79,14 +79,14 @@ app.get('/logout', (req, res) => {
 })
 
 
-app.get('/orders',coustomerauth, (req, res) => {
+app.get('/orders', coustomerauth, (req, res) => {
     (async () => {
-        try {           
+        try {
             console.log("trans")
             var productPromise = await orderServices.getOrderbyCoustomer(req.session.cid);
             console.log(productPromise)
             // res.send(productPromise)
-            res.render('coustomerOrders', { data: productPromise,profile:req.session.coustomer })
+            res.render('coustomerOrders', { data: productPromise, profile: req.session.coustomer })
         }
         catch (error) {
             console.log(error)
@@ -96,7 +96,7 @@ app.get('/orders',coustomerauth, (req, res) => {
 
 app.get('/getall', (req, res) => {
     (async () => {
-        try {           
+        try {
             console.log("trans")
             var productPromise = await coustomerServices.getCoustomers();
             console.log(productPromise)

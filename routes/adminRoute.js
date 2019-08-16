@@ -26,3 +26,21 @@ app.post('/shop/details', (req, res) => {
     })();
 
 })
+
+app.post('/login', (req, res) => {
+    (async () => {
+        console.log(req.body)
+        if(req.body.phone=="79727780098" && req.body.pass=="admin123456"){
+            res.redirect('/admin/shops')
+        }
+        else{
+            res.send('<h1>You are not Register here <br> Call 9340573858</h1>')
+
+        }
+    })();
+})
+app.get('/login', (req, res) => {
+    (async () => {
+        res.render('login', { data: 2 })
+    })();
+})
