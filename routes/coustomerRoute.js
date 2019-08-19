@@ -32,7 +32,7 @@ app.post("/login", (req, res) => {
             if (coustomerPromise) {
                 req.session.cid = coustomerPromise._id
                 req.session.coustomer = coustomerPromise
-                res.redirect('/order/shopshow')
+                res.redirect('/order/make/5d5ae77e4b112e67bbbcb2f3')
             }
             else
                 res.render('register', { number: req.params.number, data: 0 })
