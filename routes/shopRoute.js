@@ -17,7 +17,6 @@ app.post("/login", (req, res) => {
             }
             else
                 res.send('<h1>You are not Register here <br> Call 9340573858</h1>')
-            // res.render('register', { number: req.params.number, data: 1 })
         } catch (error) {
             console.log(error)
         }
@@ -85,4 +84,9 @@ app.get('/getall', (req, res) => {
             console.log(error)
         }
     })();
+})
+
+
+app.get('/reg', (req, res) => {
+    res.render('register', { number: req.params.number, data: 1 })
 })

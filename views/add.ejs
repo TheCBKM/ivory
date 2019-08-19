@@ -64,10 +64,12 @@
 
     <form class="form-group" action="/product/add" enctype="multipart/form-data" method="POST">
         Add into :- <%=name%><br>
-        <input hidden name="subcategory" value="<%=id%>">
-        Name:<input class="form-control" name="name">
-        Price<input class="form-control" name="price">
-        Image<input class="form-control" type="file" name="file" size="50" />
+        <input hidden name="subcategory" value="<%=id%>" required>
+        Name:<input class="form-control" name="name" required>
+        Price<input class="form-control" name="price" required>
+        Per(200 g/500 g/1 kg/1 dozen)<input class="form-control" name="per" required>
+
+        Image<input class="form-control" type="file" name="file" size="50" / required>
         <button class="btn btn-primary" type="submit">Add</button>
     </form>
     <%}%>

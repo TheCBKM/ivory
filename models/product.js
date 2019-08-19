@@ -32,6 +32,10 @@ const productSchema=mongoose.Schema({
         ref: 'shop',
         required: true
     },
+    per:{
+        type: String,
+        required: true
+    },
     img:{
         type:String
     }

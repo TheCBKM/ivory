@@ -19,6 +19,10 @@ const shopSchema = mongoose.Schema({
     img: {
         require: true,
         type: String
+    },
+    commission:{
+        require:true,
+        type:Number
     }
 
 }, { timestamps: true })

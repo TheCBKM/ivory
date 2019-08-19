@@ -132,7 +132,12 @@
         </div>
         <div class="form-group">
         	<textarea type="text" class="form-control" name="address" placeholder="Address" required="required"></textarea>
-        </div>
+		</div>
+		<%if(data==1){%>
+			<div class="form-group">
+				<input type="text" class="form-control" name="commission" placeholder="commission(%)" required="required">
+			</div>
+				<%}%>
 		<!-- <div class="form-group">
             <input type="password" class="form-control" name="password" placeholder="Password" required="required">
 		</div>        

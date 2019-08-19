@@ -62,9 +62,7 @@ app.post("/add", upload.single('file'), shopauth, (req, res) => {
 
 app.post("/update", shopauth, (req, res) => {
     (async () => {
-        try {
-
-           
+        try {           
             console.log(req.body)
             var savePromise = await productServices.updateProduct(req.body);
             res.redirect("/product/view")

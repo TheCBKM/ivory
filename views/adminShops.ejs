@@ -22,6 +22,8 @@
                 <th scope="col">Phone</th>
                 <th scope="col">Address</th>
                 <th scope="col">Image</th>
+                <th scope="col">Details</th>
+                <th scope="col">Commission(%)</th>
             </tr>
         </thead>
         <tbody>
@@ -34,7 +36,7 @@
                 <td><img src="/static/<%=s.img%>" width="30px" /></td>
                 <td>
                     <!-- Button trigger modal -->
-                    <button type="button" onclick="details('<%=s._id%>','<%=i%>')" class="btn btn-primary"
+                    <button type="button" onclick="details('<%=s._id%>','<%=i%>','<%=s.commission%>')" class="btn btn-primary"
                         data-toggle="modal" data-target="#exampleModal<%=i%>">
                         Details
                     </button>
@@ -62,6 +64,7 @@
                         </div>
                     </div>
                 </td>
+                <td><%=s.commission%>%</td>
 
             </tr>
             <% })%>
@@ -82,7 +85,7 @@
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
     <script>
-        function details(id, mid) {
+        function details(id, mid ,com) {
             axios.post('/admin/shop/details', {
                 id
             })
@@ -96,7 +99,7 @@
                     })
                     document.getElementById(`mo${mid}`).innerHTML += `Total Order ₹ ${order}<br>`
                     document.getElementById(`mo${mid}`).innerHTML += `Total Order This month ₹${order}<br>
-                    Total Commission ₹ ${order*2/100}`
+                    Total Commission ₹ ${order*com/100}`
                 })
         }
     </script>
