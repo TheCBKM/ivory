@@ -17,6 +17,7 @@
 
         <%data.map((d,i)=>{%>
 
+        </div>
         <%=i+1%><br>
         <small><%=d._id%></small><br>
         Price:<b><%=d.price%></b><br>
@@ -33,6 +34,10 @@
         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#A<%=d._id%>">
             View
         </button>
+        <pre>
+<input onclick="rate(`<%=d._id%>`,`<%=i%>`)" type="range" min="0" max="5" value="<%=d.rating%>" class="slider" id="myRange<%=i%>">
+0   1   2   3   4   5
+        </pre>
         <hr>
         <br>
         <div class="modal fade" id="A<%=d._id%>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -73,7 +78,7 @@
                             <li>Name:- <%=d.sid.name%></li>
                             <li>address:- <%=d.sid.address%></li>
                         </ul>
-                     </div>
+                    </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     </div>
@@ -82,11 +87,16 @@
         </div>
 
         <%})%>
-    </center> 
+    </center>
 
 
 
     <script>
+        function rate(id,i){
+            // alert(document.getElementById(`myRange${i}`).value)
+            // alert(id)
+            axios.post("/order/rating",{id,rating:document.getElementById(`myRange${i}`).value})
+        }
         function diliver(id) {
             axios.get(`/order/sold/${id}`).then(() => {
                 window.location.href = "/order/trans/0"

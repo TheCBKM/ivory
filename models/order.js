@@ -34,7 +34,12 @@ const orderSchema = mongoose.Schema({
     },
     oid:{
         type:String,
-        required: true
+        required: true,
+        unique:true
+    },
+    rating:{
+        type:Number,
+        default:2.5
     }
 
 }, { timestamps: true })

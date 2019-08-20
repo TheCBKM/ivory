@@ -227,3 +227,16 @@ app.get('/shopshow', coustomerauth, (req, res) => {
         }
     })();
 })
+
+app.post('/rating', coustomerauth, (req, res) => {
+    (async () => {
+        try {
+            or = await orderServices.updateOrder(req.body)
+
+            res.render('showshop', { data: shopPromise, profile: req.session.coustomer })
+        }
+        catch (error) {
+            console.log(error)
+        }
+    })();
+})
