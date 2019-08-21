@@ -47,9 +47,6 @@
         <div class="row">
             <div class="col col-md-12 mx-auto ">
                 <% data.map((d,i)=>{%>
-
-
-
                 <div class="card" style="width: 18rem;">
                     <div class="card-body">
                         <div class="row">
@@ -58,7 +55,9 @@
                                 <img alt="<%=d.img%>" src="/static/<%=d.img%>" height="50px">
                             </div>
                             <div class="col-4 " style="text-align: center;color: rgb(224, 70, 32)">
-                                <b><div style="font-size: 15px"> <%= d.name%></div></b>
+                                <b>
+                                    <div style="font-size: 15px"> <%= d.name%></div>
+                                </b>
                                 <br>
                                 <br>
                                 ₹<%= d.price%>/<%=d.per%>.
@@ -79,6 +78,7 @@
                         </div>
                     </div>
                 </div>
+                <hr>
                 <% })%>
             </div>
         </div>
@@ -129,7 +129,7 @@
                 console.log(p)
                 if (p != -1) {
                     arr[p].quantity = document.getElementById(`inp${id}`).value
-                    arr[p].available =arr[p].pava- document.getElementById(`inp${id}`).value
+                    arr[p].available = arr[p].pava - document.getElementById(`inp${id}`).value
 
                 }
                 else {
@@ -171,7 +171,7 @@
                     // ++document.getElementById(`inp${id}`).value
 
                     arr[p].quantity = document.getElementById(`inp${id}`).value
-                    arr[p].available =arr[p].pava- document.getElementById(`inp${id}`).value
+                    arr[p].available = arr[p].pava - document.getElementById(`inp${id}`).value
 
                     // alert("can  add more")
 
