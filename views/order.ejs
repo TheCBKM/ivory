@@ -12,22 +12,20 @@
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <title>Order</title>
     <style>
-        .card-body {
-            /* height: 50px !important;
+        
+
+        .card {
+            padding-block: 20px;
+             /* height: 50px !important;
             margin-left: 2% !important; */
             background: rgb(255, 255, 255);
             /* fallback for old browsers */
-            background: -webkit-linear-gradient(to right, #FFFFFF, #FFFFFF, rgb(255, 255, 255));
+            background: -webkit-linear-gradient(to right, rgb(245, 242, 100), rgb(155, 226, 145), rgb(189, 117, 117));
             /* Chrome 10-25, Safari 5.1-6 */
-            background: linear-gradient(to right, #FFFFFF, #FFFFFF, rgb(255, 255, 255));
+            background: linear-gradient(to right, rgb(255, 255, 255), rgb(255, 255, 255), rgb(231, 218, 103));
             /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
             padding: 0px !important;
-            /* padding-top:5px !important; */
-        }
-
-        .card {
-            padding: 0 0 0 !
-        }
+            /* padding-top:5px !important; */}
 
         body {
             background: rgb(255, 255, 255);
@@ -46,6 +44,7 @@
     <center>
         <div class="row">
             <div class="col col-md-12 mx-auto ">
+                <br>
                 <% data.map((d,i)=>{%>
                 <div class="card" style="width: 18rem;">
                     <div class="card-body">
@@ -78,7 +77,7 @@
                         </div>
                     </div>
                 </div>
-                <hr>
+                
                 <% })%>
             </div>
         </div>

@@ -34,10 +34,38 @@
         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#A<%=d._id%>">
             View
         </button>
-        <pre>
+
+
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalrating<%=d._id%>">
+            Feedback
+        </button>
+
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModalrating<%=d._id%>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+<pre>
 <input onclick="rate(`<%=d._id%>`,`<%=i%>`)" type="range" min="0" max="5" value="<%=d.rating%>" class="slider" id="myRange<%=i%>">
-0   1   2   3   4   5
-        </pre>
+0  1  2  3  4  5
+</pre>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <hr>
         <br>
         <div class="modal fade" id="A<%=d._id%>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -92,10 +120,10 @@
 
 
     <script>
-        function rate(id,i){
+        function rate(id, i) {
             // alert(document.getElementById(`myRange${i}`).value)
             // alert(id)
-            axios.post("/order/rating",{id,rating:document.getElementById(`myRange${i}`).value})
+            axios.post("/order/rating", { id, rating: document.getElementById(`myRange${i}`).value })
         }
         function diliver(id) {
             axios.get(`/order/sold/${id}`).then(() => {
