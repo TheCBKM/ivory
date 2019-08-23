@@ -19,9 +19,9 @@
 
         </div>
         <%=i+1%><br>
-        <small><%=d._id%></small><br>
+        <small><%=d.oid%></small><br>
         Price:<b><%=d.price%></b><br>
-        Time:<em><%=d.createdAt%></em><br>
+        Time:<em><script>document.write(`<%=d.createdAt%>`.split('G')[0])</script><br>
 
         <b> <%if(d.status==0){%>
             <%}else if(d.status==1){%>
@@ -38,7 +38,7 @@
 
         <!-- Button trigger modal -->
         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalrating<%=d._id%>">
-            Feedback
+                Rate Order
         </button>
 
         <!-- Modal -->
@@ -47,7 +47,7 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Feedback</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Rate Order</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
